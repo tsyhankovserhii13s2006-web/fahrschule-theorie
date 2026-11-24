@@ -1,0 +1,874 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0057a8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Fahrschule">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Fahrschule Theorie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Roboto+Condensed:wght@500;700;800&display=swap">
+<style>
+/* Layout: blue Richtzeichen-plate header, road-sign style chapter list on the left, reading column on the right; stacks on phones */
+:root{
+  --bg:#eef1f5; --surface:#ffffff; --surface2:#f6f8fb; --fg:#15202c; --muted:#596678; --line:#d6dde7;
+  --blue:#0057a8; --blue-ink:#ffffff; --yellow:#f5b800; --red:#c8102e; --green:#1d8a4b;
+  --road:#5d6672; --road-line:#ffffff; --grass:#d7e3cf; --ok-bg:#e3f4ea; --bad-bg:#fbe5e8; --note-bg:#fff6d6;
+  --f-display:"Roboto Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"Golos Text","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#10151c; --surface:#18202a; --surface2:#1e2732; --fg:#e7edf4; --muted:#9aa7b7; --line:#2c3746;
+  --blue:#1f6fc6; --blue-ink:#ffffff; --yellow:#f5c32e; --red:#ff5d70; --green:#45c47c;
+  --road:#3d4550; --road-line:#d9dee4; --grass:#1f2b22; --ok-bg:#163223; --bad-bg:#3a1b21; --note-bg:#3a3013; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10151c; --surface:#18202a; --surface2:#1e2732; --fg:#e7edf4; --muted:#9aa7b7; --line:#2c3746;
+  --blue:#1f6fc6; --blue-ink:#ffffff; --yellow:#f5c32e; --red:#ff5d70; --green:#45c47c;
+  --road:#3d4550; --road-line:#d9dee4; --grass:#1f2b22; --ok-bg:#163223; --bad-bg:#3a1b21; --note-bg:#3a3013; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--blue)}
+a{color:var(--blue)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) a{color:#7fb6ff}}
+:root[data-theme="dark"] a{color:#7fb6ff}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+h2{font-size:clamp(28px,4vw,38px);font-weight:800;letter-spacing:.01em}
+h3{font-size:21px;font-weight:700;margin-top:6px}
+p{margin:0}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--blue);color:var(--blue-ink);border-bottom:3px solid #fff}
+.top-in{display:flex;align-items:center;gap:14px;padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));max-width:1240px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.brand svg{width:34px;height:34px;flex:none}
+.brand b{font-family:var(--f-display);font-size:21px;font-weight:800;letter-spacing:.02em}
+.brand small{display:block;font-size:12px;opacity:.85;line-height:1.1}
+.top .spacer{flex:1}
+.pill{font-family:var(--f-display);font-size:14px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:3px 12px;white-space:nowrap}
+.menu-btn{display:none;background:transparent;color:inherit;border:1px solid rgba(255,255,255,.5);border-radius:8px;padding:6px 10px;font:inherit;font-size:14px;cursor:pointer}
+.wrap{display:grid;grid-template-columns:270px minmax(0,1fr);gap:32px;max-width:1240px;margin:0 auto;padding-block:24px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+nav.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);align-self:start;max-height:calc(100vh - 100px);overflow:auto;display:flex;flex-direction:column;gap:4px}
+nav.side .grp{font-family:var(--f-display);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:14px 0 4px 6px}
+nav.side a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--fg);padding:7px 10px;border-radius:8px;font-size:15px;line-height:1.3}
+nav.side a:hover{background:var(--surface)}
+nav.side a.on{background:var(--blue);color:var(--blue-ink)}
+nav.side a .n{font-family:var(--f-display);font-weight:700;width:24px;height:24px;flex:none;border-radius:50%;border:2px solid currentColor;display:grid;place-items:center;font-size:12px}
+nav.side a.done .n{background:var(--green);border-color:var(--green);color:#fff}
+nav.side a .ic{width:24px;flex:none;text-align:center;font-family:var(--f-display);font-weight:800}
+main{min-width:0}
+section.view{display:flex;flex-direction:column;gap:22px;max-width:820px}
+.eyebrow{font-family:var(--f-display);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.lead{font-size:18px;color:var(--muted);max-width:65ch}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.card ul,.card ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.de{font-style:italic;color:var(--muted)}
+.remember{background:var(--note-bg);border:2px solid var(--yellow);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.remember .lab{font-family:var(--f-display);font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:13px}
+.remember ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px;overflow-x:auto}
+.fig svg{display:block;max-width:100%;height:auto;margin:0 auto}
+.fig figcaption,.cap{font-size:14px;color:var(--muted)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-display);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+td.num{font-family:var(--f-display);font-weight:700;font-size:18px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.btn{font:inherit;font-weight:600;font-size:15px;border-radius:10px;padding:10px 16px;border:2px solid var(--blue);background:var(--blue);color:var(--blue-ink);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+details.ans{background:var(--surface2);border-radius:10px;padding:10px 14px}
+details.ans summary{cursor:pointer;font-weight:600}
+/* signs */
+.signs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.sign{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center;cursor:default}
+.sign svg{width:84px;height:84px}
+.sign .nr{font-family:var(--f-display);font-size:12px;color:var(--muted);letter-spacing:.06em}
+.sign .ru{font-weight:600;font-size:14px;line-height:1.3}
+.sign .dt{font-size:13px;color:var(--muted);line-height:1.35}
+.flash .sign{cursor:pointer}
+.flash .sign:not(.open) .ru,.flash .sign:not(.open) .dt{visibility:hidden}
+.flash .sign:not(.open)::after{content:"нажми, чтобы открыть";font-size:12px;color:var(--muted)}
+/* progress grid */
+.chap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.chap{display:flex;gap:12px;align-items:flex-start;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px}
+.chap:hover{border-color:var(--blue)}
+.chap .n{font-family:var(--f-display);font-weight:800;font-size:20px;width:36px;height:36px;flex:none;border-radius:50%;border:2.5px solid var(--blue);color:var(--blue);display:grid;place-items:center}
+.chap.done .n{background:var(--green);border-color:var(--green);color:#fff}
+.chap b{display:block;font-family:var(--f-display);font-size:18px;line-height:1.2}
+.chap span{font-size:13px;color:var(--muted);line-height:1.35;display:block;margin-top:2px}
+.learn-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;border-top:1px dashed var(--line);padding-top:18px}
+.learned-tag{color:var(--green);font-weight:600}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px}
+.stat .v{font-family:var(--f-display);font-size:34px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.stat .k{font-size:13px;color:var(--muted);margin-top:4px}
+/* quiz */
+.q{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.q-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.q-meta{font-family:var(--f-display);font-size:14px;color:var(--muted);letter-spacing:.04em}
+.fp{font-family:var(--f-display);font-weight:700;font-size:13px;border:2px solid var(--red);color:var(--red);border-radius:999px;padding:1px 10px}
+.q-text{font-size:19px;font-weight:600;line-height:1.4}
+.q-img{display:flex;justify-content:center}
+.q-img svg{width:auto;max-width:100%;height:auto;max-height:260px}
+.q-img .one svg{width:120px;height:120px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;gap:12px;align-items:flex-start;border:2px solid var(--line);border-radius:10px;padding:11px 14px;cursor:pointer;background:var(--surface2)}
+.opt input{width:20px;height:20px;margin:2px 0 0;flex:none;accent-color:var(--blue)}
+.opt.ok{border-color:var(--green);background:var(--ok-bg)}
+.opt.bad{border-color:var(--red);background:var(--bad-bg)}
+.opt.miss{border-color:var(--green);border-style:dashed}
+.numin{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.numin input{font:inherit;font-size:20px;width:140px;padding:8px 12px;border:2px solid var(--line);border-radius:10px;background:var(--surface2);color:var(--fg)}
+.fb{border-radius:10px;padding:12px 14px;font-size:15px}
+.fb.ok{background:var(--ok-bg)} .fb.bad{background:var(--bad-bg)}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--blue);border-radius:99px;transition:width .3s}
+.topics{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:14px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:6px 12px;cursor:pointer}
+.chip.on{background:var(--blue);border-color:var(--blue);color:var(--blue-ink)}
+.result{border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:8px;border:3px solid}
+.result.pass{border-color:var(--green);background:var(--ok-bg)}
+.result.fail{border-color:var(--red);background:var(--bad-bg)}
+.result .big{font-family:var(--f-display);font-size:40px;font-weight:800;line-height:1}
+.navq{display:flex;flex-wrap:wrap;gap:6px}
+.navq button{font:inherit;font-family:var(--f-display);font-size:13px;width:34px;height:34px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.navq button.ans{background:var(--surface2);border-color:var(--blue)}
+.navq button.cur{background:var(--blue);color:var(--blue-ink);border-color:var(--blue)}
+.navq button.w{background:var(--bad-bg);border-color:var(--red)}
+.navq button.r{background:var(--ok-bg);border-color:var(--green)}
+.src li{margin-bottom:4px}
+svg text{font-family:var(--f-display)}
+.svg-road{fill:var(--road)} .svg-grass{fill:var(--grass)} .svg-line{stroke:var(--road-line)}
+.svg-fg{fill:var(--fg)} .svg-muted{fill:var(--muted)} .svg-stroke-fg{stroke:var(--fg)} .svg-stroke-muted{stroke:var(--muted)}
+.svg-blue{fill:var(--blue)} .svg-red{fill:var(--red)} .svg-yellow{fill:var(--yellow)} .svg-surface{fill:var(--surface)}
+@media (max-width:860px){
+  .wrap{grid-template-columns:minmax(0,1fr);gap:16px}
+  nav.side{position:static;max-height:none;display:none;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px}
+  nav.side.open{display:flex}
+  .menu-btn{display:inline-block}
+  .top .pill{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <a class="brand" href="#start" aria-label="На главную">
+    <svg viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,4 96,50 50,96 4,50" fill="#fff"/><polygon points="50,17 83,50 50,83 17,50" fill="#f5b800"/></svg>
+    <span><b>Fahrschule Theorie</b><small>Теория на права кл. B · по-русски</small></span>
+  </a>
+  <span class="spacer"></span>
+  <span class="pill" id="topProgress">Пройдено 0 из 12</span>
+  <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="side">Разделы</button>
+</div></header>
+
+<div class="wrap">
+<nav class="side" id="side" aria-label="Разделы"></nav>
+<main id="main">
+
+<!-- START -->
+<section class="view" data-view="start" data-title="Главная">
+  <div class="eyebrow">Führerschein Klasse B · Theorieprüfung</div>
+  <h2>Учим теорию немецкой автошколы — просто и с картинками</h2>
+  <p class="lead">12 коротких разделов в порядке, как их проходят в Fahrschule. Читай раздел, смотри схемы, потом сразу тренируйся на вопросах в стиле настоящего экзамена TÜV/DEKRA.</p>
+  <div class="row">
+    <a class="btn" href="#pruefung">Начать с раздела 1</a>
+    <a class="btn ghost" href="#exam">Пробный экзамен (30 вопросов)</a>
+    <a class="btn ghost" href="#zeichen">Знаки — карточки</a>
+  </div>
+  <div class="stats" id="homeStats"></div>
+  <h3>Разделы</h3>
+  <div class="chap-grid" id="chapGrid"></div>
+  <div class="remember"><span class="lab">Как учиться, чтобы сдать</span>
+    <ul>
+      <li>Один раздел в день → 10 минут читать, 10 минут тренировать тему.</li>
+      <li>Ошибся — нажми «Почему?» и прочитай объяснение. Ошибки копятся в режиме «Мои ошибки».</li>
+      <li>Когда пробный экзамен сдаёшь 3 раза подряд — переходи на официальный каталог вопросов (ссылки в разделе «Где тренироваться дальше»).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 1 PRUEFUNG -->
+<section class="view" data-view="pruefung" data-title="Как устроен экзамен" hidden>
+  <div class="eyebrow">Раздел 1 · Die Theorieprüfung</div>
+  <h2>Как устроен экзамен</h2>
+  <p class="lead">Экзамен проходит в TÜV или DEKRA на компьютере/планшете. Его можно сдавать <b>на русском языке</b> — это один из разрешённых иностранных языков.</p>
+  <div class="stats">
+    <div class="stat"><div class="v">30</div><div class="k">вопросов: 20 общих <span class="de">(Grundstoff)</span> + 10 для кл. B <span class="de">(Zusatzstoff)</span></div></div>
+    <div class="stat"><div class="v">2–5</div><div class="k">штрафных очков <span class="de">(Fehlerpunkte)</span> за каждый неверный ответ</div></div>
+    <div class="stat"><div class="v">≤ 10</div><div class="k">штрафных очков — экзамен сдан</div></div>
+    <div class="stat"><div class="v">45</div><div class="k">минут обычно на всё</div></div>
+  </div>
+  <div class="card">
+    <h3>Главные правила подсчёта</h3>
+    <ul>
+      <li>Вопрос засчитан, только если отмечены <b>все</b> верные ответы и <b>ни одного</b> неверного. Верных бывает 1, 2 или 3.</li>
+      <li>Самые «дорогие» вопросы (5 очков) — про приоритет проезда, опасности, алкоголь.</li>
+      <li><b>Две ошибки по 5 очков = провал</b>, даже если в сумме ровно 10.</li>
+      <li>Есть вопросы-видео <span class="de">(Videofragen)</span> на опасные ситуации и вопросы с числом <span class="de">(Zahlenfragen)</span>, где надо вписать цифру.</li>
+      <li>Ответы можно менять и пропускать, вернуться к вопросу до сдачи.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Что нужно, чтобы допустили</h3>
+    <ul>
+      <li>Пройдены обязательные уроки теории в автошколе: 12 двойных уроков общего материала + 2 урока для класса B.</li>
+      <li>Заявление на права подано в Führerscheinstelle, автошкола записала на экзамен.</li>
+      <li>С собой — удостоверение личности (Personalausweis/Reisepass).</li>
+      <li>Каталог вопросов обновляется 1 апреля и 1 октября — тренируйся по актуальному.</li>
+    </ul>
+  </div>
+  <div class="remember"><span class="lab">Запомни</span>
+    <ul><li>Сдал — максимум 10 штрафных очков и не больше одной ошибки «на 5».</li><li>Читай вопрос до конца: часто верных ответов несколько.</li></ul>
+  </div>
+</section>
+
+<!-- 2 ZEICHEN -->
+<section class="view" data-view="zeichen" data-title="Дорожные знаки" hidden>
+  <div class="eyebrow">Раздел 2 · Verkehrszeichen</div>
+  <h2>Дорожные знаки</h2>
+  <p class="lead">Форма подсказывает смысл ещё до того, как прочитал знак.</p>
+  <div class="cols">
+    <div class="card"><h3>Треугольник</h3><p><b>Предупреждение</b> <span class="de">(Gefahrzeichen)</span>. Впереди опасность — снизь скорость и будь готов.</p></div>
+    <div class="card"><h3>Круг</h3><p><b>Предписание/запрет</b> <span class="de">(Vorschriftzeichen)</span>. Красная кайма — нельзя, синий круг — обязательно.</p></div>
+    <div class="card"><h3>Прямоугольник</h3><p><b>Информация</b> <span class="de">(Richtzeichen)</span>. Главная дорога, населённый пункт, зоны, автобан.</p></div>
+  </div>
+  <div class="row"><button class="btn" id="flashBtn" type="button">Режим карточек: скрыть значения</button><a class="btn ghost" href="#quiz-zeichen">Тренировать знаки</a></div>
+  <div id="signGroups"></div>
+</section>
+
+<!-- 3 VORFAHRT -->
+<section class="view" data-view="vorfahrt" data-title="Кто едет первым" hidden>
+  <div class="eyebrow">Раздел 3 · Vorfahrt und Vorrang</div>
+  <h2>Кто едет первым</h2>
+  <p class="lead">Самая важная тема экзамена: почти все вопросы здесь стоят 5 очков.</p>
+  <div class="card">
+    <h3>Порядок старшинства</h3>
+    <ol>
+      <li><b>Полицейский</b> <span class="de">(Polizeibeamter)</span> — важнее всего.</li>
+      <li><b>Светофор</b> <span class="de">(Ampel)</span>.</li>
+      <li><b>Знаки</b> приоритета (205, 206, 301, 306).</li>
+      <li><b>Общие правила</b>: «правая рука» <span class="de">(rechts vor links)</span>.</li>
+    </ol>
+    <p class="cap">Если работает светофор — знаки приоритета не действуют. Если светофор выключен или мигает жёлтым — действуют знаки.</p>
+  </div>
+  <div class="remember"><span class="lab">Четыре правила, которые решают 90 % задач</span>
+    <ul>
+      <li><b>Rechts vor links:</b> на перекрёстке без знаков пропускаешь того, кто справа.</li>
+      <li><b>Налево — пропусти встречных</b>, которые едут прямо или направо.</li>
+      <li><b>При повороте</b> пропускаешь пешеходов и велосипедистов, которые идут/едут прямо.</li>
+      <li><b>Выезд</b> со двора, парковки, грунтовой дороги или с тротуара — пропускаешь всех.</li>
+    </ul>
+  </div>
+  <h3>Разберём по схемам</h3>
+  <div class="cols" id="sceneList"></div>
+  <div class="card">
+    <h3>Полицейский регулировщик</h3>
+    <div class="tbl"><table>
+      <tr><th>Положение</th><th>Что значит</th></tr>
+      <tr><td>Стоит к тебе <b>боком</b></td><td>Можно ехать (как зелёный)</td></tr>
+      <tr><td>Стоит к тебе <b>грудью или спиной</b></td><td>Стоп (как красный)</td></tr>
+      <tr><td><b>Рука поднята вверх</b></td><td>Внимание, жди (как жёлтый). Кто уже на перекрёстке — освобождает его</td></tr>
+    </table></div>
+  </div>
+  <div class="card">
+    <h3>Светофор</h3>
+    <ul>
+      <li><b>Жёлтый</b> — остановись перед стоп-линией, если можешь это сделать безопасно.</li>
+      <li><b>Красный + жёлтый</b> — приготовься, но ещё стой.</li>
+      <li><b>Зелёная стрелка-табличка</b> <span class="de">(Grünpfeil)</span> у красного: сначала <b>полностью остановиться</b>, потом осторожно направо, пропуская пешеходов и велосипедистов.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4 TEMPO -->
+<section class="view" data-view="tempo" data-title="Скорость и дистанция" hidden>
+  <div class="eyebrow">Раздел 4 · Geschwindigkeit und Abstand</div>
+  <h2>Скорость, дистанция, тормозной путь</h2>
+  <div class="card"><h3>Ограничения для легковой машины</h3>
+    <div class="tbl"><table>
+      <tr><th>Где</th><th>Максимум</th></tr>
+      <tr><td>В населённом пункте <span class="de">(innerorts)</span> — после жёлтой таблички с названием</td><td class="num">50</td></tr>
+      <tr><td>Вне населённого пункта <span class="de">(außerorts)</span></td><td class="num">100</td></tr>
+      <tr><td>Автобан — рекомендуемая скорость <span class="de">(Richtgeschwindigkeit)</span></td><td class="num">130</td></tr>
+      <tr><td>Туман, видимость меньше 50 м</td><td class="num">50</td></tr>
+      <tr><td>С цепями противоскольжения</td><td class="num">50</td></tr>
+      <tr><td>С прицепом</td><td class="num">80</td></tr>
+    </table></div>
+    <p class="cap">Главное правило — <b>ехать «на видимость»</b> <span class="de">(Fahren auf Sicht)</span>: ты должен успеть остановиться на том участке, который видишь.</p>
+  </div>
+  <div class="remember"><span class="lab">Формулы — их спрашивают с числом</span>
+    <ul>
+      <li><b>Путь реакции</b> <span class="de">(Reaktionsweg)</span> = (скорость ÷ 10) × 3</li>
+      <li><b>Тормозной путь</b> <span class="de">(Bremsweg)</span> = (скорость ÷ 10) × (скорость ÷ 10)</li>
+      <li><b>Экстренное торможение</b> <span class="de">(Gefahrbremsung)</span> = тормозной путь ÷ 2</li>
+      <li><b>Остановочный путь</b> <span class="de">(Anhalteweg)</span> = путь реакции + тормозной путь</li>
+      <li><b>Дистанция</b>: «половина спидометра» в метрах <span class="de">(halber Tacho)</span>: при 100 км/ч — 50 м. В городе — минимум путь за 1 секунду (≈15 м при 50 км/ч).</li>
+    </ul>
+  </div>
+  <figure class="fig" id="figAnhalte"></figure>
+  <div class="card"><h3>Пример: 50 км/ч</h3>
+    <p>Реакция: 5 × 3 = <b>15 м</b>. Торможение: 5 × 5 = <b>25 м</b>. Остановочный путь: <b>40 м</b>. При экстренном торможении: 15 + 12,5 = <b>27,5 м</b>.</p>
+    <p>Скорость в 2 раза больше → тормозной путь в <b>4 раза</b> больше.</p>
+  </div>
+</section>
+
+<!-- 5 UEBERHOLEN -->
+<section class="view" data-view="ueberholen" data-title="Обгон и перестроение" hidden>
+  <div class="eyebrow">Раздел 5 · Überholen, Fahrstreifen</div>
+  <h2>Обгон, перестроение, круговое движение</h2>
+  <figure class="fig" id="figAbstand"></figure>
+  <div class="cols">
+    <div class="card"><h3>Обгонять нельзя</h3><ul>
+      <li>при неясной ситуации <span class="de">(unklare Verkehrslage)</span>;</li>
+      <li>под знаком «Обгон запрещён» (276);</li>
+      <li>на пешеходном переходе (зебре);</li>
+      <li>если встречная полоса не видна полностью;</li>
+      <li>справа — вне города и на автобане.</li>
+    </ul></div>
+    <div class="card"><h3>Как обгонять</h3><ul>
+      <li>Зеркало → плечевой взгляд <span class="de">(Schulterblick)</span> → поворотник → обгон.</li>
+      <li>Велосипедист, пешеход, самокат: боковой интервал <b>≥ 1,5 м в городе, ≥ 2 м вне города</b>.</li>
+      <li>Вернулся — поворотник вправо, не «подрезай».</li>
+      <li>Тебя обгоняют — <b>не ускоряйся</b>.</li>
+    </ul></div>
+  </div>
+  <div class="card"><h3>Круговое движение <span class="de">(Kreisverkehr)</span></h3>
+    <ul>
+      <li>Со знаками 205 + 215 приоритет у тех, кто уже на круге.</li>
+      <li>При въезде <b>поворотник не включаешь</b>, при выезде — <b>включаешь</b> правый.</li>
+      <li>Движение против часовой стрелки, останавливаться на круге нельзя.</li>
+    </ul>
+  </div>
+  <div class="card"><h3>Застёжка-молния <span class="de">(Reißverschluss)</span></h3>
+    <p>Если полоса заканчивается, едешь по ней <b>до самого конца</b> и там перестраиваешься поочерёдно: одна машина из одной полосы, одна — из другой.</p>
+  </div>
+</section>
+
+<!-- 6 PARKEN -->
+<section class="view" data-view="parken" data-title="Остановка и стоянка" hidden>
+  <div class="eyebrow">Раздел 6 · Halten und Parken</div>
+  <h2>Остановка и стоянка</h2>
+  <div class="card">
+    <p><b>Остановка</b> <span class="de">(Halten)</span> — до 3 минут, ты рядом. <b>Стоянка</b> <span class="de">(Parken)</span> — дольше 3 минут или ты ушёл от машины.</p>
+  </div>
+  <figure class="fig" id="figParken"></figure>
+  <div class="cols">
+    <div class="card"><h3>Стоянка запрещена</h3><ul>
+      <li>ближе <b>5 м</b> до и после перекрёстка;</li>
+      <li>ближе <b>15 м</b> до и после знака остановки автобуса;</li>
+      <li>перед въездами и выездами;</li>
+      <li>перед андреевским крестом: в городе ближе 5 м, вне города ближе 50 м;</li>
+      <li>на люках и перед опущенным бордюром.</li>
+    </ul></div>
+    <div class="card"><h3>Даже остановка запрещена</h3><ul>
+      <li>на пешеходном переходе и ближе 5 м перед ним;</li>
+      <li>в узких местах и на крутых поворотах;</li>
+      <li>на железнодорожном переезде;</li>
+      <li>под знаком 283 «Остановка запрещена»;</li>
+      <li>на автобане и Kraftfahrstraße.</li>
+    </ul></div>
+  </div>
+  <div class="remember"><span class="lab">Запомни цифры</span><ul><li>5 м — перекрёсток и зебра.</li><li>15 м — остановка автобуса.</li><li>Знак 286 (одна полоса) — остановиться можно до 3 минут, знак 283 (крест) — нельзя совсем.</li></ul></div>
+</section>
+
+<!-- 7 AUTOBAHN -->
+<section class="view" data-view="autobahn" data-title="Автобан и переезд" hidden>
+  <div class="eyebrow">Раздел 7 · Autobahn, Bahnübergang</div>
+  <h2>Автобан и железнодорожный переезд</h2>
+  <div class="card"><h3>Автобан</h3><ul>
+    <li>Только для машин, которые могут ехать <b>быстрее 60 км/ч</b>.</li>
+    <li>Запрещено: разворот, задний ход, остановка (кроме аварии), езда по обочине.</li>
+    <li>Въезд: разгоняйся на полосе разгона и перестраивайся, не останавливаясь.</li>
+    <li>Ограничения нет, но рекомендуется <b>130</b>.</li>
+  </ul></div>
+  <figure class="fig" id="figRettung"></figure>
+  <div class="remember"><span class="lab">Коридор для спасателей (Rettungsgasse)</span>
+    <ul><li>Образуется уже при медленном движении в пробке, не ждать сирены.</li><li><b>Крайняя левая полоса уходит влево</b>, все остальные — вправо.</li></ul>
+  </div>
+  <figure class="fig" id="figBaken"></figure>
+  <div class="card"><h3>Железнодорожный переезд</h3><ul>
+    <li>Поезд <b>всегда</b> имеет приоритет (андреевский крест, знак 201).</li>
+    <li>Перед переездом — не обгонять, ехать умеренно.</li>
+    <li>Стоять перед крестом, если: красный свет, закрывается шлагбаум, поезд приближается, звучит сигнал.</li>
+    <li>Таблички с полосами <span class="de">(Baken)</span> вне города: 3 полосы ≈ 240 м, 2 ≈ 160 м, 1 ≈ 80 м до переезда.</li>
+  </ul></div>
+</section>
+
+<!-- 8 GEFAHREN -->
+<section class="view" data-view="gefahren" data-title="Опасные ситуации" hidden>
+  <div class="eyebrow">Раздел 8 · Gefahrenlehre</div>
+  <h2>Опасные ситуации</h2>
+  <p class="lead">Здесь не цифры, а мышление: «что может случиться через 3 секунды?» Всегда выбирай самый осторожный ответ.</p>
+  <div class="cols">
+    <div class="card"><h3>Дети</h3><ul><li>Мяч выкатился — <b>следом выбежит ребёнок</b>. Тормози.</li><li>Дети непредсказуемы: снизь скорость, будь готов тормозить.</li></ul></div>
+    <div class="card"><h3>Школьный автобус</h3><ul><li>Подъезжает к остановке с аварийкой — <b>обгонять нельзя</b>.</li><li>Стоит с аварийкой — проезжать <b>шагом</b> (≈ 4–7 км/ч) с обеих сторон, при необходимости ждать.</li></ul></div>
+    <div class="card"><h3>Пожилые и инвалиды</h3><ul><li>Могут медленно и неожиданно переходить. Пропусти, наберись терпения.</li><li>Белая трость = незрячий человек.</li></ul></div>
+    <div class="card"><h3>Велосипедисты</h3><ul><li>При повороте направо — <b>плечевой взгляд</b> в «слепую зону».</li><li>Выходя из машины — открывай дверь правой рукой (голландский хват), смотри назад.</li></ul></div>
+    <div class="card"><h3>Дикие животные</h3><ul><li>Животное на дороге: тормози, <b>переключи на ближний свет</b>, посигналь.</li><li><b>Не уходи резко в сторону</b> — опаснее, чем столкновение.</li><li>За одним животным часто идут другие.</li></ul></div>
+    <div class="card"><h3>Аквапланинг и скользко</h3><ul><li>Аквапланинг: <b>сбросить газ, выжать сцепление</b>, руль прямо, не тормозить резко.</li><li>Мосты и лес замерзают раньше.</li><li>Ночью встречный слепит — смотри на правый край дороги, снизь скорость.</li></ul></div>
+  </div>
+</section>
+
+<!-- 9 ALKOHOL -->
+<section class="view" data-view="alkohol" data-title="Алкоголь и усталость" hidden>
+  <div class="eyebrow">Раздел 9 · Alkohol, Drogen, Müdigkeit</div>
+  <h2>Алкоголь, лекарства, усталость</h2>
+  <div class="card"><div class="tbl"><table>
+    <tr><th>Промилле</th><th>Что это значит</th></tr>
+    <tr><td class="num">0,0 ‰</td><td>Для новичков на <b>испытательном сроке</b> и всех <b>младше 21 года</b></td></tr>
+    <tr><td class="num">0,3 ‰</td><td>Уже уголовное преступление, если есть признаки (едешь «волной», авария)</td></tr>
+    <tr><td class="num">0,5 ‰</td><td>Нарушение: штраф, баллы, запрет на вождение</td></tr>
+    <tr><td class="num">1,1 ‰</td><td>Абсолютная неспособность водить — всегда преступление</td></tr>
+  </table></div></div>
+  <div class="remember"><span class="lab">Запомни</span><ul>
+    <li>Алкоголь уходит только со временем, примерно 0,1 ‰ в час. Кофе, душ, еда — <b>не помогают</b>.</li>
+    <li>Алкоголь: ухудшает зрение, реакцию, даёт ложную уверенность.</li>
+    <li>Лекарства: читай инструкцию, спроси врача.</li>
+    <li>Устал — <b>пауза</b>, лучше короткий сон 15–20 минут. Открытое окно и музыка не спасают от микросна.</li>
+  </ul></div>
+</section>
+
+<!-- 10 PROBEZEIT -->
+<section class="view" data-view="probezeit" data-title="Испытательный срок и баллы" hidden>
+  <div class="eyebrow">Раздел 10 · Probezeit, Punkte, Papiere</div>
+  <h2>Испытательный срок, баллы, документы</h2>
+  <div class="card"><h3>Испытательный срок <span class="de">(Probezeit)</span> — 2 года</h3>
+    <ul>
+      <li><b>A-нарушение</b> (тяжёлое: красный свет, превышение больше чем на 20 км/ч, алкоголь, опасный обгон) или <b>два B-нарушения</b> → обязательный семинар <span class="de">(Aufbauseminar)</span> и продление срока <b>до 4 лет</b>.</li>
+      <li>Снова нарушил → письменное предупреждение и совет пройти консультацию у психолога.</li>
+      <li>Третий раз → права забирают.</li>
+    </ul>
+  </div>
+  <div class="card"><h3>Баллы во Фленсбурге <span class="de">(Fahreignungsregister)</span></h3>
+    <div class="tbl"><table>
+      <tr><th>Баллы</th><th>Последствие</th></tr>
+      <tr><td class="num">1–3</td><td>Нарушение даёт 1, 2 или 3 балла</td></tr>
+      <tr><td class="num">4–5</td><td>Напоминание <span class="de">(Ermahnung)</span></td></tr>
+      <tr><td class="num">6–7</td><td>Предупреждение <span class="de">(Verwarnung)</span></td></tr>
+      <tr><td class="num">8</td><td>Права отбирают</td></tr>
+    </table></div>
+  </div>
+  <div class="card"><h3>Документы</h3><ul>
+    <li>Всегда с собой: <b>права</b> и <b>свидетельство о регистрации, часть I</b> <span class="de">(Zulassungsbescheinigung Teil I)</span>.</li>
+    <li>Часть II (бывший Fahrzeugbrief) — храни дома.</li>
+    <li>Техосмотр <span class="de">(Hauptuntersuchung, HU)</span> — каждые 2 года, новая машина первый раз через 3 года.</li>
+  </ul></div>
+</section>
+
+<!-- 11 TECHNIK -->
+<section class="view" data-view="technik" data-title="Машина и груз" hidden>
+  <div class="eyebrow">Раздел 11 · Technik, Ladung, Sicherheit</div>
+  <h2>Машина, груз, безопасность</h2>
+  <div class="cols">
+    <div class="card"><h3>Шины</h3><ul><li>Минимальная глубина протектора — <b>1,6 мм</b> (лучше 3 мм летом, 4 мм зимой).</li><li>Давление проверять на <b>холодных</b> шинах.</li><li>Зимние шины (символ горы со снежинкой) обязательны при гололёде, снеге, слякоти.</li></ul></div>
+    <div class="card"><h3>Тормоза и ABS</h3><ul><li>С ABS при экстренном торможении — <b>педаль в пол</b> и держать.</li><li>С ABS можно <b>рулить</b> во время торможения.</li><li>ABS <b>не всегда</b> сокращает тормозной путь (на снегу/гравии бывает длиннее).</li></ul></div>
+    <div class="card"><h3>Груз</h3><ul><li>Груз закрепить так, чтобы не сдвинулся при резком торможении.</li><li>Выступает сзади больше 1 м — пометить красным флажком/табличкой.</li><li>Тяжёлое — вниз и вперёд.</li></ul></div>
+    <div class="card"><h3>Люди в машине</h3><ul><li>Ремень — все и всегда.</li><li>Дети до 12 лет и ниже 150 см — <b>детское кресло</b>.</li><li>Кресло спиной вперёд на переднем сиденье — только с выключенной подушкой безопасности.</li><li>Подголовник: верх на уровне макушки.</li></ul></div>
+  </div>
+</section>
+
+<!-- 12 UMWELT / UNFALL -->
+<section class="view" data-view="umwelt" data-title="Экология, свет, ДТП" hidden>
+  <div class="eyebrow">Раздел 12 · Umwelt, Licht, Unfall</div>
+  <h2>Экономия, свет, поломка и ДТП</h2>
+  <div class="card"><h3>Экономичная езда <span class="de">(umweltbewusst fahren)</span></h3><ul>
+    <li>Быстро разгоняться и <b>рано переключать вверх</b> (≈ 2000 об/мин).</li>
+    <li>Ехать предусмотрительно, катиться на передаче (топливо при этом не тратится).</li>
+    <li>Не прогревать двигатель на месте. Долго стоишь (шлагбаум, пробка) — выключи мотор.</li>
+    <li>Снимать пустой багажник на крыше, проверять давление шин, кондиционер — умеренно.</li>
+  </ul></div>
+  <div class="card"><h3>Свет</h3><ul>
+    <li>Дальний свет выключать при встречных и когда едешь за кем-то близко.</li>
+    <li>Задний противотуманный фонарь — <b>только при видимости меньше 50 м из-за тумана</b>. Не в дождь.</li>
+  </ul></div>
+  <figure class="fig" id="figDreieck"></figure>
+  <div class="remember"><span class="lab">Авария или поломка — по порядку</span><ul>
+    <li>1. <b>Обезопасить</b>: аварийка, жилет, знак аварийной остановки. Людей — за отбойник.</li>
+    <li>2. <b>Позвонить 112</b>: где? что случилось? сколько пострадавших? какие травмы? ждать вопросов.</li>
+    <li>3. <b>Первая помощь</b> — обязанность каждого.</li>
+    <li>Уехать с места ДТП, не дождавшись, — уголовное преступление <span class="de">(Unfallflucht)</span>.</li>
+  </ul></div>
+</section>
+
+<!-- QUIZ -->
+<section class="view" data-view="quiz" data-title="Тренировка" hidden>
+  <div class="eyebrow">Тренировка по темам</div>
+  <h2>Тренировка</h2>
+  <p class="lead">Сразу показывается, верно или нет, и почему. Выбери тему или тренируй всё подряд.</p>
+  <div class="topics" id="topicChips"></div>
+  <div class="bar"><i id="qBar" style="width:0"></i></div>
+  <div id="quizBox"></div>
+</section>
+
+<!-- EXAM -->
+<section class="view" data-view="exam" data-title="Пробный экзамен" hidden>
+  <div class="eyebrow">Prüfungssimulation</div>
+  <h2>Пробный экзамен</h2>
+  <p class="lead">30 случайных вопросов, штрафные очки как на настоящем экзамене. Ответы покажутся только в конце.</p>
+  <div id="examBox"></div>
+</section>
+
+<!-- QUELLEN -->
+<section class="view" data-view="quellen" data-title="Где тренироваться дальше" hidden>
+  <div class="eyebrow">Quellen und Übung</div>
+  <h2>Где тренироваться дальше</h2>
+  <p class="lead">Сайт сделан по примеру материалов автошкол и тренажёров ниже. Вопросы здесь — мои учебные, в стиле экзамена. Перед экзаменом обязательно прогони <b>официальный каталог</b> в одном из приложений.</p>
+  <div class="card"><h3>Официальный каталог вопросов (есть русский язык)</h3><ul class="src">
+    <li><a href="https://www.clickclickdrive.de/" target="_blank" rel="noopener">ClickClickDrive</a> — бесплатное приложение TÜV/DEKRA, официальные вопросы.</li>
+    <li><a href="https://www.fahren-lernen.de/" target="_blank" rel="noopener">Fahren Lernen (Degener)</a> — то, что выдают многие автошколы.</li>
+    <li><a href="https://www.fuehrerschein-bestehen.de/" target="_blank" rel="noopener">Führerschein bestehen</a> — приложение и сайт, платный доступ.</li>
+    <li><a href="https://www.theorie24.de/" target="_blank" rel="noopener">theorie24</a> — онлайн-тренажёр с видео-вопросами.</li>
+    <li><a href="https://zutobi.com/de/klasse-b-pkw/fuhrerschein-theorieprufung" target="_blank" rel="noopener">Zutobi</a> — объяснения простым языком.</li>
+    <li><a href="https://testhelden.com/products/fuehrerschein-klasse-b-theoriepruefung" target="_blank" rel="noopener">TestHelden</a> — тренажёр и пробные тесты.</li>
+    <li>Приложения ADAC Führerschein, iTheorie, Fahrschule.de — в App Store / Google Play.</li>
+  </ul></div>
+  <div class="card"><h3>Об экзамене и правилах</h3><ul class="src">
+    <li><a href="https://www.tuev-nord.de/de/fuehrerschein/theoriepruefung/" target="_blank" rel="noopener">TÜV NORD — Theorieprüfung</a></li>
+    <li><a href="https://www.adac.de/verkehr/rund-um-den-fuehrerschein/erwerb/theoretische-fuehrerscheinpruefung/" target="_blank" rel="noopener">ADAC — theoretische Führerscheinprüfung</a></li>
+    <li><a href="https://www.bussgeldkatalog.net/theorieunterricht/" target="_blank" rel="noopener">Theorieunterricht: темы и обязательные часы</a></li>
+    <li><a href="https://www.bussgeldkatalog.org/theoriepruefung-fehlerpunkte/" target="_blank" rel="noopener">Fehlerpunkte — как считают</a></li>
+    <li><a href="https://www.mobile.de/magazin/artikel/fuehrerschein/theoriepruefung" target="_blank" rel="noopener">mobile.de — Ablauf und Tipps</a></li>
+  </ul></div>
+  <div class="card"><h3>Сбросить прогресс</h3>
+    <p class="cap">Прогресс хранится только в этом браузере.</p>
+    <div class="row"><button class="btn ghost" type="button" id="resetBtn">Сбросить всё</button><span id="resetMsg" class="cap"></span></div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+/* ---------- storage ---------- */
+const KEY='fs-theorie-v1';
+let ST={learned:{},stats:{},wrong:{},exams:[]};
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s)ST=Object.assign(ST,s);}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(ST));}catch(e){}}
+
+/* ---------- chapters ---------- */
+const CH=[
+ ['pruefung','Как устроен экзамен','30 вопросов, штрафные очки'],
+ ['zeichen','Дорожные знаки','Формы, цвета, 30 главных знаков'],
+ ['vorfahrt','Кто едет первым','Правая рука, повороты, регулировщик'],
+ ['tempo','Скорость и дистанция','Ограничения и формулы'],
+ ['ueberholen','Обгон и перестроение','Интервалы, круг, «молния»'],
+ ['parken','Остановка и стоянка','5 м, 15 м, знаки'],
+ ['autobahn','Автобан и переезд','Коридор, шлагбаум, Baken'],
+ ['gefahren','Опасные ситуации','Дети, животные, аквапланинг'],
+ ['alkohol','Алкоголь и усталость','0,0 / 0,3 / 0,5 / 1,1 ‰'],
+ ['probezeit','Испытательный срок и баллы','Probezeit, Фленсбург'],
+ ['technik','Машина и груз','Шины, ABS, кресло'],
+ ['umwelt','Экология, свет, ДТП','Экономия, 112, знак']
+];
+const CHN=Object.fromEntries(CH.map(c=>[c[0],c[1]]));
+
+/* ---------- road signs (100x100) ---------- */
+const R='#c8102e',B='#0057a8',Y='#f5b800',K='#1a1a1a',W='#ffffff';
+const ring=(inner='',fill=W)=>`<circle cx="50" cy="50" r="45" fill="${fill}" stroke="${R}" stroke-width="10"/>${inner}`;
+const blueC=inner=>`<circle cx="50" cy="50" r="48" fill="${B}" stroke="${W}" stroke-width="2"/>${inner}`;
+const warn=inner=>`<path d="M50 6 L96 88 Q97 92 92 92 L8 92 Q3 92 4 88 Z" fill="${R}"/><path d="M50 24 L81 80 L19 80 Z" fill="${W}"/>${inner}`;
+const sq=(inner,fill=B)=>`<rect x="5" y="5" width="90" height="90" rx="8" fill="${fill}" stroke="${W}" stroke-width="3"/>${inner}`;
+const car=(x,y,c)=>`<g transform="translate(${x} ${y})"><rect x="0" y="9" width="24" height="14" rx="3" fill="${c}"/><path d="M4 9 L7 1 L17 1 L20 9 Z" fill="${c}"/><rect x="1" y="22" width="5" height="5" fill="${c}"/><rect x="18" y="22" width="5" height="5" fill="${c}"/></g>`;
+function kreisArrows(col){let s='';for(let k=0;k<3;k++){const a0=(-80+k*120)*Math.PI/180,a1=a0-75*Math.PI/180,r=26;
+ const p=a=>[50+r*Math.cos(a),50+r*Math.sin(a)];const[x0,y0]=p(a0),[x1,y1]=p(a1);
+ const t=[Math.sin(a1),-Math.cos(a1)],n=[Math.cos(a1),Math.sin(a1)];
+ s+=`<path d="M${x0.toFixed(1)} ${y0.toFixed(1)} A${r} ${r} 0 0 0 ${x1.toFixed(1)} ${y1.toFixed(1)}" fill="none" stroke="${col}" stroke-width="8"/>`;
+ s+=`<polygon points="${(x1+t[0]*12).toFixed(1)},${(y1+t[1]*12).toFixed(1)} ${(x1+n[0]*10).toFixed(1)},${(y1+n[1]*10).toFixed(1)} ${(x1-n[0]*10).toFixed(1)},${(y1-n[1]*10).toFixed(1)}" fill="${col}"/>`;}return s;}
+const SIGNS={
+ '101':{g:'warn',ru:'Опасное место',dt:'Общая опасность, смотри табличку под знаком',svg:warn(`<rect x="46" y="38" width="8" height="26" rx="3" fill="${K}"/><circle cx="50" cy="71" r="4.5" fill="${K}"/>`)},
+ '102':{g:'warn',ru:'Перекрёсток «правая рука»',dt:'Впереди перекрёсток, где действует rechts vor links',svg:warn(`<path d="M36 46 L64 72 M64 46 L36 72" stroke="${K}" stroke-width="7"/>`)},
+ '103':{g:'warn',ru:'Опасный поворот направо',dt:'Снизь скорость перед поворотом',svg:warn(`<path d="M42 74 L42 56 Q42 46 54 46 L58 46" fill="none" stroke="${K}" stroke-width="7"/><polygon points="57,38 68,46 57,54" fill="${K}"/>`)},
+ '136':{g:'warn',ru:'Дети',dt:'Рядом школа, площадка: дети могут выбежать',svg:warn(`<circle cx="42" cy="44" r="4.5" fill="${K}"/><path d="M42 50 L40 64 L35 74 M40 64 L45 74 M42 53 L36 60 M42 53 L48 58" stroke="${K}" stroke-width="4" fill="none"/><circle cx="58" cy="50" r="4" fill="${K}"/><path d="M58 55 L57 66 L53 74 M57 66 L61 74 M58 58 L53 63 M58 58 L63 63" stroke="${K}" stroke-width="3.5" fill="none"/>`)},
+ '301':{g:'warn',ru:'Приоритет на ближайшем перекрёстке',dt:'Только на одном следующем перекрёстке ты главный',svg:warn(`<rect x="45" y="38" width="10" height="36" fill="${K}"/><rect x="35" y="48" width="30" height="6" fill="${K}"/>`)},
+ '201':{g:'vor',ru:'Андреевский крест',dt:'Ж/д переезд: поезд всегда первый',svg:`<g transform="rotate(35 50 50)"><rect x="8" y="42" width="84" height="16" fill="${W}" stroke="${R}" stroke-width="3"/><rect x="8" y="42" width="16" height="16" fill="${R}"/><rect x="76" y="42" width="16" height="16" fill="${R}"/></g><g transform="rotate(-35 50 50)"><rect x="8" y="42" width="84" height="16" fill="${W}" stroke="${R}" stroke-width="3"/><rect x="8" y="42" width="16" height="16" fill="${R}"/><rect x="76" y="42" width="16" height="16" fill="${R}"/></g>`},
+ '205':{g:'vor',ru:'Уступи дорогу',dt:'Пропусти всех на главной дороге',svg:`<path d="M6 10 L94 10 L50 92 Z" fill="${R}" stroke-linejoin="round"/><path d="M24 20 L76 20 L50 70 Z" fill="${W}"/>`},
+ '206':{g:'vor',ru:'Стоп',dt:'Полностью остановиться у стоп-линии и уступить',svg:`<polygon points="31,4 69,4 96,31 96,69 69,96 31,96 4,69 4,31" fill="${R}" stroke="${W}" stroke-width="3"/><text x="50" y="61" text-anchor="middle" font-size="30" font-weight="800" fill="${W}">STOP</text>`},
+ '208':{g:'vor',ru:'Уступи встречным',dt:'В узком месте пропусти встречный транспорт',svg:ring(`<path d="M38 72 L38 36" stroke="${K}" stroke-width="7"/><polygon points="30,38 38,24 46,38" fill="${K}"/><path d="M62 28 L62 62" stroke="${R}" stroke-width="7"/><polygon points="54,60 62,74 70,60" fill="${R}"/>`)},
+ '209':{g:'vor',ru:'Только направо',dt:'Предписанное направление движения',svg:blueC(`<path d="M28 50 L62 50" stroke="${W}" stroke-width="10"/><polygon points="58,34 78,50 58,66" fill="${W}"/>`)},
+ '215':{g:'vor',ru:'Круговое движение',dt:'Против часовой стрелки; с 205 — круг главный',svg:blueC(kreisArrows(W))},
+ '250':{g:'vor',ru:'Движение запрещено',dt:'Для всех транспортных средств',svg:ring()},
+ '267':{g:'vor',ru:'Въезд запрещён',dt:'С этой стороны въезжать нельзя',svg:`<circle cx="50" cy="50" r="47" fill="${R}"/><rect x="17" y="42" width="66" height="16" fill="${W}"/>`},
+ '274':{g:'vor',ru:'Ограничение скорости',dt:'Не быстрее указанного (здесь 70 км/ч)',svg:ring(`<text x="50" y="64" text-anchor="middle" font-size="40" font-weight="800" fill="${K}">70</text>`)},
+ '278':{g:'vor',ru:'Конец ограничения',dt:'Снова действуют обычные 50/100',svg:`<circle cx="50" cy="50" r="46" fill="${W}" stroke="#999" stroke-width="2"/><text x="50" y="64" text-anchor="middle" font-size="40" font-weight="800" fill="#888">70</text><path d="M22 70 L70 22 M28 76 L76 28 M34 82 L82 34" stroke="${K}" stroke-width="2.5"/>`},
+ '276':{g:'vor',ru:'Обгон запрещён',dt:'Нельзя обгонять многоколейные ТС',svg:ring(car(22,36,R)+car(54,36,K))},
+ '283':{g:'vor',ru:'Остановка запрещена',dt:'Нельзя даже остановиться',svg:`<circle cx="50" cy="50" r="45" fill="${B}" stroke="${R}" stroke-width="10"/><path d="M22 22 L78 78 M78 22 L22 78" stroke="${R}" stroke-width="9"/>`},
+ '286':{g:'vor',ru:'Стоянка запрещена',dt:'Остановка до 3 минут разрешена',svg:`<circle cx="50" cy="50" r="45" fill="${B}" stroke="${R}" stroke-width="10"/><path d="M22 22 L78 78" stroke="${R}" stroke-width="9"/>`},
+ '306':{g:'richt',ru:'Главная дорога',dt:'Ты главный на всех перекрёстках до знака 307',svg:`<polygon points="50,3 97,50 50,97 3,50" fill="${W}" stroke="#555" stroke-width="1.5"/><polygon points="50,16 84,50 50,84 16,50" fill="${Y}"/>`},
+ '307':{g:'richt',ru:'Конец главной дороги',dt:'Дальше снова смотри знаки или «правую руку»',svg:`<polygon points="50,3 97,50 50,97 3,50" fill="${W}" stroke="#555" stroke-width="1.5"/><polygon points="50,16 84,50 50,84 16,50" fill="${Y}"/><path d="M30 38 L62 70 M38 30 L70 62 M34 34 L66 66" stroke="${K}" stroke-width="3"/>`},
+ '308':{g:'richt',ru:'Приоритет перед встречными',dt:'В узком месте едешь первым',svg:sq(`<path d="M38 74 L38 36" stroke="${W}" stroke-width="8"/><polygon points="29,38 38,22 47,38" fill="${W}"/><path d="M62 26 L62 60" stroke="${R}" stroke-width="6"/><polygon points="55,58 62,72 69,58" fill="${R}"/>`)},
+ '310':{g:'richt',ru:'Начало населённого пункта',dt:'С этого места максимум 50 км/ч',svg:`<rect x="3" y="22" width="94" height="56" rx="5" fill="${Y}" stroke="${K}" stroke-width="3"/><text x="50" y="54" text-anchor="middle" font-size="19" font-weight="800" fill="${K}">Paderborn</text><text x="50" y="69" text-anchor="middle" font-size="10" fill="${K}">Kreis Paderborn</text>`},
+ '274.1':{g:'richt',ru:'Зона 30',dt:'30 км/ч во всей зоне, обычно «правая рука»',svg:`<rect x="10" y="4" width="80" height="92" rx="5" fill="${W}" stroke="${K}" stroke-width="2"/><circle cx="50" cy="40" r="27" fill="${W}" stroke="${R}" stroke-width="7"/><text x="50" y="51" text-anchor="middle" font-size="28" font-weight="800" fill="${K}">30</text><text x="50" y="86" text-anchor="middle" font-size="18" font-weight="800" fill="${K}">ZONE</text>`},
+ '325.1':{g:'richt',ru:'Жилая зона',dt:'Шагом, пешеходы и дети на всей дороге',svg:`<rect x="3" y="14" width="94" height="72" rx="6" fill="${B}" stroke="${W}" stroke-width="3"/><path d="M12 76 L12 52 L26 40 L40 52 L40 76 Z" fill="${W}"/><circle cx="52" cy="50" r="4" fill="${W}"/><path d="M52 55 L52 66 L48 76 M52 66 L56 76 M52 58 L46 62 M52 58 L58 62" stroke="${W}" stroke-width="3" fill="none"/><circle cx="62" cy="72" r="4" fill="${W}"/><path d="M68 76 L70 64 L86 64 L90 76 Z" fill="${W}"/>`},
+ '330.1':{g:'richt',ru:'Автобан',dt:'Только для ТС быстрее 60 км/ч',svg:sq(`<path d="M18 40 Q50 18 82 40" fill="none" stroke="${W}" stroke-width="6"/><rect x="16" y="38" width="68" height="7" fill="${W}"/><path d="M36 86 L46 50 M64 86 L54 50" stroke="${W}" stroke-width="6"/><path d="M50 82 L50 74 M50 66 L50 60" stroke="${W}" stroke-width="3"/>`)},
+ '350':{g:'richt',ru:'Пешеходный переход',dt:'Пропусти пешеходов, обгон запрещён',svg:sq(`<path d="M50 14 L88 82 L12 82 Z" fill="${W}"/><circle cx="54" cy="38" r="4.5" fill="${K}"/><path d="M53 44 L50 58 L44 68 M50 58 L56 68 M52 48 L45 54 M52 48 L59 52" stroke="${K}" stroke-width="3.5" fill="none"/><path d="M24 76 L32 76 M38 76 L46 76 M52 76 L60 76 M66 76 L74 76" stroke="${K}" stroke-width="5"/>`)},
+ '357':{g:'richt',ru:'Тупик',dt:'Сквозного проезда нет',svg:sq(`<rect x="42" y="38" width="16" height="48" fill="${W}"/><rect x="24" y="20" width="52" height="16" fill="${R}"/>`)},
+ '720':{g:'richt',ru:'Зелёная стрелка',dt:'При красном: остановиться, потом можно направо',svg:`<rect x="8" y="24" width="84" height="52" rx="5" fill="${K}"/><path d="M24 50 L62 50" stroke="#1fa84f" stroke-width="11"/><polygon points="58,32 80,50 58,68" fill="#1fa84f"/>`},
+ 'baken':{g:'richt',ru:'Маячки перед переездом',dt:'3 · 2 · 1 полосы ≈ 240 · 160 · 80 м',svg:`<rect x="34" y="4" width="32" height="92" rx="3" fill="${W}" stroke="#999" stroke-width="2"/><path d="M34 30 L66 14 M34 56 L66 40 M34 82 L66 66" stroke="${R}" stroke-width="9"/>`}
+};
+const signSvg=(k,cls='')=>`<svg viewBox="0 0 100 100" class="${cls}" role="img" aria-label="${SIGNS[k].ru}">${SIGNS[k].svg}</svg>`;
+const GROUPS=[['warn','Предупреждающие (треугольник)'],['vor','Приоритет, запреты и предписания'],['richt','Информационные']];
+document.getElementById('signGroups').innerHTML=GROUPS.map(([g,t])=>`<h3 style="margin:18px 0 10px">${t}</h3><div class="signs">`+
+ Object.entries(SIGNS).filter(([k,s])=>s.g===g).map(([k,s])=>`<div class="sign" tabindex="0">${signSvg(k)}<div class="nr">${/^\d/.test(k)?'Знак '+k:'Baken'}</div><div class="ru">${s.ru}</div><div class="dt">${s.dt}</div></div>`).join('')+`</div>`).join('');
+const sg=document.getElementById('signGroups');
+document.getElementById('flashBtn').onclick=e=>{sg.classList.toggle('flash');sg.querySelectorAll('.sign').forEach(s=>s.classList.remove('open'));e.target.textContent=sg.classList.contains('flash')?'Показать все значения':'Режим карточек: скрыть значения';};
+sg.addEventListener('click',e=>{const s=e.target.closest('.sign');if(s&&sg.classList.contains('flash'))s.classList.toggle('open');});
+sg.addEventListener('keydown',e=>{if(e.key==='Enter'){const s=e.target.closest('.sign');if(s&&sg.classList.contains('flash'))s.classList.toggle('open');}});
+
+/* ---------- intersection scenes ---------- */
+const CARC={blue:['#2f6fdb','синий'],red:['#d63a3a','красный'],green:['#2e9e5b','зелёный'],yellow:['#e0a800','жёлтый']};
+const ROT={S:0,W:90,N:180,E:270};
+function rp(x,y,d){const a=d*Math.PI/180;return[x*Math.cos(a)-y*Math.sin(a),x*Math.sin(a)+y*Math.cos(a)];}
+function scene(def){
+ let s=`<svg viewBox="-130 -130 260 260" width="260" height="260" role="img" aria-label="Схема перекрёстка">`;
+ s+=`<rect x="-130" y="-130" width="260" height="260" class="svg-grass"/>`;
+ s+=`<rect x="-28" y="-130" width="56" height="260" class="svg-road"/><rect x="-130" y="-28" width="260" height="56" class="svg-road"/>`;
+ s+=`<g class="svg-line" stroke-width="2" stroke-dasharray="10 8"><line x1="0" y1="-130" x2="0" y2="-30"/><line x1="0" y1="30" x2="0" y2="130"/><line x1="-130" y1="0" x2="-30" y2="0"/><line x1="30" y1="0" x2="130" y2="0"/></g>`;
+ if(def.signs)for(const[d,k]of Object.entries(def.signs)){const[x,y]=rp(44,44,ROT[d]);s+=`<g transform="translate(${(x-12).toFixed(1)} ${(y-12).toFixed(1)}) scale(.24)">${SIGNS[k].svg}</g>`;}
+ for(const c of def.cars){const d=ROT[c.from],col=CARC[c.c][0];
+  const path={straight:'M12 40 L12 -112',right:'M12 40 Q12 12 112 12',left:'M12 40 Q12 -12 -112 -12'}[c.move];
+  const head={straight:'4,-108 12,-124 20,-108',right:'108,4 124,12 108,20',left:'-108,-20 -124,-12 -108,-4'}[c.move];
+  s+=`<g transform="rotate(${d})"><path d="${path}" fill="none" stroke="${col}" stroke-width="3.5" stroke-dasharray="7 5"/><polygon points="${head}" fill="${col}"/>`;
+  s+=`<rect x="3" y="44" width="18" height="30" rx="5" fill="${col}" stroke="#fff" stroke-width="1.5"/><rect x="5.5" y="49" width="13" height="7" rx="2" fill="#fff" opacity=".75"/></g>`;}
+ return s+`</svg>`;}
+const SCENES={
+ s1:{t:'Перекрёсток без знаков',cars:[{from:'S',move:'straight',c:'blue'},{from:'E',move:'straight',c:'red'}],a:'Первым красный, потом синий. Красный находится справа от синего — rechts vor links.'},
+ s2:{t:'Поворот налево и встречный',cars:[{from:'S',move:'left',c:'blue'},{from:'N',move:'straight',c:'red'}],a:'Первым красный (едет прямо), синий поворачивает налево и пропускает встречного.'},
+ s3:{t:'Три машины без знаков',cars:[{from:'S',move:'straight',c:'blue'},{from:'W',move:'straight',c:'green'},{from:'E',move:'right',c:'red'}],a:'Красный → синий → зелёный. У красного справа никого нет. Синий ждёт красного (он справа). Зелёный ждёт синего (он справа от зелёного).'},
+ s4:{t:'Главная дорога сверху вниз',signs:{S:'306',N:'306',W:'205',E:'205'},cars:[{from:'S',move:'left',c:'blue'},{from:'N',move:'straight',c:'red'},{from:'W',move:'straight',c:'green'}],a:'Красный → синий → зелёный. Красный и синий на главной, но синий поворачивает налево и пропускает встречного. Зелёный под знаком «Уступи дорогу» — последний.'},
+ s5:{t:'Второстепенная и поворот направо',signs:{S:'205',N:'205',W:'306',E:'306'},cars:[{from:'S',move:'right',c:'blue'},{from:'W',move:'straight',c:'red'}],a:'Первым красный (главная дорога). Синий под знаком 205 поворачивает направо, но всё равно уступает.'}
+};
+document.getElementById('sceneList').innerHTML=Object.entries(SCENES).map(([k,v])=>`<figure class="fig" style="margin:0"><h3>${v.t}</h3>${scene(v)}<details class="ans"><summary>Кто едет первым? Показать ответ</summary><p style="margin-top:8px">${v.a}</p></details></figure>`).join('');
+
+/* ---------- figures ---------- */
+function figAnhalte(){const sp=[30,50,70,100],W0=150,sc=3.4;let y=20,s=`<svg viewBox="0 0 620 230" width="620" role="img" aria-label="Остановочный путь при разных скоростях">`;
+ s+=`<text x="0" y="12" font-size="13" class="svg-muted">км/ч</text>`;
+ for(const v of sp){const r=v/10*3,b=(v/10)**2;y+=44;
+  s+=`<text x="0" y="${y+5}" font-size="18" font-weight="700" class="svg-fg">${v}</text>`;
+  s+=`<rect x="48" y="${y-12}" width="${r*sc}" height="24" fill="#f5b800"/><rect x="${48+r*sc}" y="${y-12}" width="${b*sc/1.0*0.95}" height="24" class="svg-red"/>`;
+  s+=`<text x="${52+(r+b*0.95)*sc}" y="${y+5}" font-size="15" font-weight="700" class="svg-fg">${r+b} м</text>`;}
+ s+=`<rect x="48" y="214" width="14" height="12" fill="#f5b800"/><text x="68" y="225" font-size="13" class="svg-muted">путь реакции</text><rect x="170" y="214" width="14" height="12" class="svg-red"/><text x="190" y="225" font-size="13" class="svg-muted">тормозной путь (обычное торможение)</text>`;
+ return s+`</svg><figcaption>Остановочный путь растёт намного быстрее скорости: 100 км/ч — уже 130 м.</figcaption>`;}
+function figAbstand(){return `<svg viewBox="0 0 560 170" width="560" role="img" aria-label="Боковой интервал при обгоне велосипедиста">
+ <rect x="0" y="20" width="560" height="130" class="svg-road"/><line x1="0" y1="85" x2="560" y2="85" class="svg-line" stroke-width="2" stroke-dasharray="14 10"/>
+ <g transform="translate(330 112)"><circle cx="0" cy="10" r="9" fill="none" stroke="#fff" stroke-width="3"/><circle cx="34" cy="10" r="9" fill="none" stroke="#fff" stroke-width="3"/><path d="M0 10 L14 -6 L34 10 M14 -6 L24 -6" stroke="#fff" stroke-width="3" fill="none"/><circle cx="18" cy="-22" r="5" fill="#f5b800"/><path d="M18 -16 L16 -4" stroke="#f5b800" stroke-width="4"/></g>
+ <g transform="translate(250 38)"><rect width="110" height="40" rx="9" fill="#2f6fdb"/><rect x="70" y="5" width="22" height="30" rx="3" fill="#fff" opacity=".7"/></g>
+ <line x1="360" y1="80" x2="360" y2="102" stroke="#f5b800" stroke-width="3"/><line x1="352" y1="80" x2="368" y2="80" stroke="#f5b800" stroke-width="3"/><line x1="352" y1="102" x2="368" y2="102" stroke="#f5b800" stroke-width="3"/>
+ <text x="380" y="98" font-size="18" font-weight="800" fill="#fff">≥ 1,5 м в городе · ≥ 2 м вне города</text>
+ </svg><figcaption>Интервал при обгоне велосипедиста, пешехода или самоката.</figcaption>`;}
+function figParken(){return `<svg viewBox="-150 -150 300 300" width="300" role="img" aria-label="Зоны запрета стоянки у перекрёстка">
+ <rect x="-150" y="-150" width="300" height="300" class="svg-grass"/><rect x="-30" y="-150" width="60" height="300" class="svg-road"/><rect x="-150" y="-30" width="300" height="60" class="svg-road"/>
+ <g fill="#c8102e" opacity=".85"><rect x="18" y="30" width="12" height="40"/><rect x="18" y="-70" width="12" height="40"/><rect x="-30" y="30" width="12" height="40"/><rect x="-30" y="-70" width="12" height="40"/><rect x="30" y="18" width="40" height="12"/><rect x="-70" y="18" width="40" height="12"/><rect x="30" y="-30" width="40" height="12"/><rect x="-70" y="-30" width="40" height="12"/></g>
+ <rect x="18" y="86" width="12" height="26" rx="3" fill="#2f6fdb"/><rect x="18" y="118" width="12" height="26" rx="3" fill="#2f6fdb"/>
+ <text x="40" y="55" font-size="16" font-weight="800" class="svg-fg">5 м</text><text x="40" y="112" font-size="13" class="svg-fg">здесь можно</text>
+ </svg><figcaption>Красное — ближе 5 м от пересечения кромок дорог: стоянка запрещена.</figcaption>`;}
+function figRettung(){const lane=(y,dx,c)=>`<g transform="translate(${dx} ${y})"><rect width="60" height="30" rx="7" fill="${c}"/></g>`;
+ let s=`<svg viewBox="0 0 560 220" width="560" role="img" aria-label="Коридор для спасателей на трёхполосной дороге"><rect x="0" y="10" width="560" height="170" class="svg-road"/>`;
+ s+=`<line x1="0" y1="66" x2="560" y2="66" class="svg-line" stroke-width="2" stroke-dasharray="14 10"/><line x1="0" y1="123" x2="560" y2="123" class="svg-line" stroke-width="2" stroke-dasharray="14 10"/>`;
+ for(const x of [30,130,230,330]){s+=lane(14,x,'#d63a3a');s+=lane(80,x,'#2f6fdb');s+=lane(146,x,'#2e9e5b');}
+ s+=`<rect x="20" y="52" width="400" height="22" fill="#f5b800" opacity=".35"/><path d="M440 63 L530 63" stroke="#f5b800" stroke-width="5"/><polygon points="430,63 446,53 446,73" fill="#f5b800"/>`;
+ s+=`<text x="440" y="48" font-size="14" font-weight="800" fill="#fff">коридор</text><text x="10" y="208" font-size="14" class="svg-fg">Левая полоса — к левому краю, средняя и правая — вправо.</text></svg>`;
+ return s+`<figcaption>Направление движения: слева направо. Коридор между левой и средней полосой.</figcaption>`;}
+function figBaken(){const b=(x,n)=>`<g transform="translate(${x} 40) scale(.6)">${SIGNS['baken'].svg.replace(/M34 (30|56|82)[^"]*/g,m=>m)}</g>`;
+ const bk=(x,n)=>{let st='';for(let i=0;i<n;i++)st+=`<path d="M${x} ${70+i*22} l24 -12" stroke="#c8102e" stroke-width="7"/>`;return `<rect x="${x}" y="40" width="24" height="76" rx="2" fill="#fff" stroke="#999" stroke-width="1.5"/>`+st;};
+ return `<svg viewBox="0 0 600 170" width="600" role="img" aria-label="Маячки перед ж/д переездом">
+ <rect x="0" y="126" width="600" height="20" class="svg-road"/>${bk(40,3)}${bk(220,2)}${bk(400,1)}
+ <g transform="translate(520 30) scale(.8)">${SIGNS['201'].svg}</g>
+ <text x="52" y="164" text-anchor="middle" font-size="15" font-weight="700" class="svg-fg">240 м</text><text x="232" y="164" text-anchor="middle" font-size="15" font-weight="700" class="svg-fg">160 м</text><text x="412" y="164" text-anchor="middle" font-size="15" font-weight="700" class="svg-fg">80 м</text>
+ </svg><figcaption>Чем меньше полос, тем ближе переезд.</figcaption>`;}
+function figDreieck(){const row=(y,label,dist,w)=>`<text x="0" y="${y+5}" font-size="15" font-weight="700" class="svg-fg">${label}</text><rect x="150" y="${y-8}" width="${w}" height="16" class="svg-road"/><g transform="translate(${150+w-4} ${y-12})"><polygon points="12,0 24,22 0,22" fill="none" stroke="#c8102e" stroke-width="4"/></g><rect x="140" y="${y-10}" width="22" height="20" rx="4" fill="#2f6fdb"/><text x="${150+w/2}" y="${y-14}" text-anchor="middle" font-size="14" font-weight="700" class="svg-fg">${dist}</text>`;
+ return `<svg viewBox="0 0 600 190" width="600" role="img" aria-label="Расстояние до знака аварийной остановки">${row(40,'В городе','≈ 50 м',100)}${row(95,'Вне города','≈ 100 м',200)}${row(150,'Автобан','150–400 м',400)}</svg><figcaption>Знак аварийной остановки ставят за машиной. На автобане — идти за отбойником.</figcaption>`;}
+document.getElementById('figAnhalte').innerHTML=figAnhalte();
+document.getElementById('figAbstand').innerHTML=figAbstand();
+document.getElementById('figParken').innerHTML=figParken();
+document.getElementById('figRettung').innerHTML=figRettung();
+document.getElementById('figBaken').innerHTML=figBaken();
+document.getElementById('figDreieck').innerHTML=figDreieck();
+
+/* ---------- questions ---------- */
+// t=topic, p=Fehlerpunkte, q=text, a=[[text,correct]], n=number answer, img, w=why
+const Q=[
+ {t:'vorfahrt',p:5,img:{scene:'s1'},q:'В каком порядке проедут машины?',a:[['Сначала красный, потом синий',1],['Сначала синий, потом красный',0],['Оба одновременно',0]],w:'Перекрёсток без знаков — rechts vor links. Красный справа от синего.'},
+ {t:'vorfahrt',p:5,img:{scene:'s2'},q:'Синий хочет повернуть налево. Как правильно?',a:[['Синий пропускает красного',1],['Красный пропускает синего, потому что синий справа',0],['Синий едет первым, он раньше подъехал',0]],w:'Поворачивающий налево пропускает встречных, которые едут прямо или направо.'},
+ {t:'vorfahrt',p:5,img:{scene:'s3'},q:'В каком порядке проедут машины?',a:[['Красный → синий → зелёный',1],['Зелёный → синий → красный',0],['Синий → красный → зелёный',0]],w:'У красного справа пусто. Синий ждёт красного, зелёный ждёт синего.'},
+ {t:'vorfahrt',p:5,img:{scene:'s4'},q:'В каком порядке проедут машины?',a:[['Красный → синий → зелёный',1],['Синий → красный → зелёный',0],['Зелёный → красный → синий',0]],w:'Главная дорога — красный и синий. Синий налево и пропускает встречного. Зелёный последний.'},
+ {t:'vorfahrt',p:5,img:{scene:'s5'},q:'Синий поворачивает направо. Должен ли он пропустить красного?',a:[['Да, красный на главной дороге',1],['Нет, при повороте направо уступать не надо',0],['Нет, красный слева от синего',0]],w:'Знак 205 действует при любом направлении: уступаешь всем на главной.'},
+ {t:'vorfahrt',p:4,q:'Полицейский стоит к тебе боком с вытянутыми руками. Что это значит?',a:[['Можно ехать',1],['Стоп',0],['Внимание, жди',0]],w:'Боком = зелёный, грудью/спиной = красный.'},
+ {t:'vorfahrt',p:4,q:'Регулировщик поднял руку вверх. Что делать?',a:[['Ждать перед перекрёстком',1],['Если я уже на перекрёстке — освободить его',1],['Ехать дальше, если путь свободен',0]],w:'Рука вверх = жёлтый для всех.'},
+ {t:'vorfahrt',p:4,img:{sign:'720'},q:'Красный свет, рядом табличка с зелёной стрелкой. Как поступить?',a:[['Остановиться у стоп-линии',1],['Затем осторожно повернуть направо, пропуская пешеходов и велосипедистов',1],['Повернуть направо без остановки, если никого нет',0]],w:'Grünpfeil: сначала полная остановка.'},
+ {t:'vorfahrt',p:4,q:'Ты выезжаешь с парковки на дорогу. Кого пропускаешь?',a:[['Всех участников движения на дороге',1],['Только тех, кто справа',0],['Никого, если включил поворотник',0]],w:'Выезд с участка, парковки, грунтовой дороги — уступаешь всем.'},
+ {t:'vorfahrt',p:4,q:'Ты поворачиваешь направо. Пешеход переходит дорогу, на которую ты поворачиваешь. Что делаешь?',a:[['Пропускаю пешехода',1],['Еду, у меня зелёный',0],['Сигналю, чтобы ускорился',0]],w:'При повороте пешеходы, идущие прямо, имеют приоритет.'},
+ {t:'vorfahrt',p:5,img:{sign:'205'},q:'Ты под этим знаком и хочешь проехать прямо. Кого ты пропускаешь?',a:[['Всех на главной дороге — слева и справа',1],['Только тех, кто справа',0],['Никого, если еду прямо',0]],w:'«Уступи дорогу» — всем на главной.'},
+ {t:'zeichen',p:4,img:{sign:'206'},q:'Что требует этот знак?',a:[['Полностью остановиться у стоп-линии',1],['Уступить дорогу',1],['Остановиться, только если кто-то едет',0]],w:'STOP — всегда полная остановка, даже если пусто.'},
+ {t:'zeichen',p:4,img:{sign:'306'},q:'Что означает этот знак?',a:[['Я на главной дороге',1],['Ближайший перекрёсток — «правая рука»',0],['Конец главной дороги',0]],w:'Главная дорога действует до знака 307.'},
+ {t:'zeichen',p:4,img:{sign:'102'},q:'Что означает этот знак?',a:[['Впереди перекрёсток, где действует «правая рука»',1],['Ж/д переезд',0],['Я главный на перекрёстке',0]],w:'Знак 102: Kreuzung mit Vorfahrt von rechts.'},
+ {t:'zeichen',p:3,img:{sign:'283'},q:'Что разрешает/запрещает этот знак?',a:[['Запрещена любая остановка',1],['Остановиться можно до 3 минут',0],['Запрещена только стоянка ночью',0]],w:'Крест = Halteverbot. Одна полоса (286) — до 3 минут можно.'},
+ {t:'zeichen',p:3,img:{sign:'286'},q:'Можно ли здесь остановиться, чтобы высадить пассажира?',a:[['Да, ненадолго (до 3 минут)',1],['Нет, остановка запрещена совсем',0]],w:'286 — eingeschränktes Halteverbot.'},
+ {t:'zeichen',p:3,img:{sign:'267'},q:'Что означает этот знак?',a:[['Въезд запрещён',1],['Движение запрещено с обеих сторон',0],['Конец зоны',0]],w:'267 — Verbot der Einfahrt.'},
+ {t:'zeichen',p:4,img:{sign:'208'},q:'Узкое место, перед тобой этот знак. Как поступишь?',a:[['Пропущу встречный транспорт',1],['Проеду первым',0]],w:'Красная стрелка — у тебя, значит уступаешь.'},
+ {t:'zeichen',p:3,img:{sign:'274.1'},q:'Что верно для этой зоны?',a:[['Максимум 30 км/ч во всей зоне',1],['Обычно действует «правая рука»',1],['30 км/ч только до ближайшего перекрёстка',0]],w:'Зона действует до знака конца зоны.'},
+ {t:'zeichen',p:4,img:{sign:'325.1'},q:'Что действует в этой зоне?',a:[['Ехать шагом',1],['Пешеходы могут идти по всей ширине дороги, дети — играть',1],['Ставить машину можно где угодно',0]],w:'Verkehrsberuhigter Bereich: стоянка только в отмеченных местах.'},
+ {t:'zeichen',p:3,img:{sign:'310'},q:'С этого места для легковой машины действует максимум…',a:[['50 км/ч',1],['30 км/ч',0],['70 км/ч',0]],w:'Ortstafel = начало населённого пункта = 50.'},
+ {t:'zeichen',p:3,img:{sign:'215'},q:'Что верно для кругового движения?',a:[['При въезде поворотник не включаю',1],['При выезде включаю правый поворотник',1],['Остановиться на круге можно в любом месте',0]],w:'Движение против часовой стрелки, выезд — с поворотником.'},
+ {t:'zeichen',p:3,img:{sign:'301'},q:'Что означает этот знак?',a:[['На ближайшем перекрёстке я главный',1],['Я главный до конца дороги',0],['Впереди опасный поворот',0]],w:'301 — только один следующий перекрёсток.'},
+ {t:'tempo',p:3,n:15,q:'Скорость 50 км/ч. Какой путь реакции в метрах (по формуле автошколы)?',w:'(50 ÷ 10) × 3 = 15 м.'},
+ {t:'tempo',p:3,n:64,q:'Скорость 80 км/ч. Какой тормозной путь при обычном торможении в метрах?',w:'8 × 8 = 64 м.'},
+ {t:'tempo',p:3,n:130,q:'Скорость 100 км/ч. Какой остановочный путь (реакция + обычное торможение) в метрах?',w:'Реакция 10 × 3 = 30, тормозной 10 × 10 = 100. Итого 130 м.'},
+ {t:'tempo',p:4,q:'Скорость выросла в два раза. Как изменится тормозной путь?',a:[['Станет в 4 раза длиннее',1],['Станет в 2 раза длиннее',0],['Не изменится',0]],w:'Тормозной путь растёт в квадрате от скорости.'},
+ {t:'tempo',p:4,q:'Какая дистанция до машины впереди нужна при 100 км/ч вне города?',a:[['Около 50 м',1],['Около 20 м',0],['Около 100 м достаточно только в дождь, иначе 10 м',0]],w:'Правило «половина спидометра».'},
+ {t:'tempo',p:3,q:'Какая максимальная скорость легковой машины вне населённого пункта (не автобан)?',a:[['100 км/ч',1],['80 км/ч',0],['130 км/ч',0]],w:'außerorts — 100.'},
+ {t:'tempo',p:4,q:'Туман, видимость меньше 50 м. Что верно?',a:[['Не быстрее 50 км/ч',1],['Можно включить задний противотуманный фонарь',1],['Включить дальний свет',0]],w:'Дальний свет в тумане слепит самого себя.'},
+ {t:'tempo',p:4,q:'Что значит «ехать на видимость»?',a:[['Успеть остановиться на участке, который я вижу',1],['Ехать так, чтобы меня видели',0],['Ехать по разметке',0]],w:'Fahren auf Sicht.'},
+ {t:'ueberholen',p:4,q:'Ты обгоняешь велосипедиста в городе. Какой минимальный боковой интервал?',a:[['1,5 м',1],['1 м',0],['0,5 м',0]],w:'В городе 1,5 м, вне города 2 м.'},
+ {t:'ueberholen',p:5,q:'Когда обгон запрещён?',a:[['При неясной ситуации на дороге',1],['На пешеходном переходе',1],['Если встречный транспорт далеко и всё видно',0]],w:'Обгон только при полностью свободной видимой встречной полосе.'},
+ {t:'ueberholen',p:3,q:'Тебя обгоняют. Что делаешь?',a:[['Не ускоряюсь',1],['Ускоряюсь, чтобы обгон быстрее закончился',0]],w:'Обгоняемому ускоряться запрещено.'},
+ {t:'ueberholen',p:3,q:'Полоса заканчивается, плотное движение. Когда перестраиваться?',a:[['Прямо перед концом полосы, по очереди',1],['Как можно раньше, сразу при первом знаке',0]],w:'Reißverschluss — в самом конце.'},
+ {t:'parken',p:3,n:5,q:'На каком минимальном расстоянии (м) от пересечения кромок дорог у перекрёстка можно поставить машину?',w:'Ближе 5 м до и после перекрёстка — запрещено.'},
+ {t:'parken',p:2,n:15,q:'Ближе скольких метров до и после знака остановки автобуса запрещена стоянка?',w:'15 м.'},
+ {t:'parken',p:3,q:'Где запрещена даже остановка?',a:[['На пешеходном переходе и ближе 5 м перед ним',1],['На ж/д переезде',1],['Перед въездом во двор',0]],w:'Перед въездом запрещена стоянка, но короткая остановка допускается.'},
+ {t:'autobahn',p:4,img:{fig:'rettung'},q:'Пробка на автобане с тремя полосами. Как образовать коридор для спасателей?',a:[['Левая полоса — влево, средняя и правая — вправо',1],['Все уходят вправо',0],['Левая и средняя — влево, правая — вправо',0]],w:'Коридор между крайней левой и остальными.'},
+ {t:'autobahn',p:4,q:'Что на автобане запрещено?',a:[['Разворот',1],['Задний ход',1],['Обгон слева',0]],w:'Также запрещено останавливаться и ездить по обочине.'},
+ {t:'autobahn',p:3,q:'Каким машинам можно ехать по автобану?',a:[['Тем, что могут ехать быстрее 60 км/ч',1],['Всем, включая мопеды',0]],w:'Bauartbedingt mehr als 60 km/h.'},
+ {t:'autobahn',p:5,img:{sign:'201'},q:'Шлагбаум ещё открыт, но мигает красный свет. Что делаешь?',a:[['Останавливаюсь перед андреевским крестом',1],['Быстро проезжаю, пока шлагбаум открыт',0]],w:'Поезд всегда главный. Красный свет — стоп.'},
+ {t:'autobahn',p:3,img:{sign:'baken'},q:'Перед тобой маячок с одной красной полосой. Сколько примерно до переезда?',a:[['Около 80 м',1],['Около 240 м',0],['Около 160 м',0]],w:'3 полосы — 240 м, 2 — 160 м, 1 — 80 м.'},
+ {t:'gefahren',p:5,q:'Школьный автобус стоит на остановке с включённой аварийкой. Как ты едешь мимо?',a:[['Только шагом, при необходимости останавливаюсь',1],['Это правило действует и для встречного направления',1],['С обычной скоростью, если детей не видно',0]],w:'Стоящий автобус с аварийкой — шагом с обеих сторон.'},
+ {t:'gefahren',p:5,q:'Мяч выкатился на дорогу между припаркованными машинами. Чего ожидать?',a:[['Следом выбежит ребёнок — тормозить',1],['Ничего, мяч безопасен',0],['Объехать мяч и ехать дальше',0]],w:'За мячом почти всегда бежит ребёнок.'},
+ {t:'gefahren',p:5,q:'Ночью на дороге стоит косуля. Как правильно?',a:[['Затормозить',1],['Переключить на ближний свет и посигналить',1],['Резко уйти в сторону',0]],w:'Резкий манёвр опаснее столкновения.'},
+ {t:'gefahren',p:4,q:'Началось аквапланирование. Что делаешь?',a:[['Сбрасываю газ',1],['Выжимаю сцепление',1],['Резко торможу',0]],w:'Колёса должны снова зацепиться за дорогу.'},
+ {t:'gefahren',p:4,q:'Ты поворачиваешь направо. Справа может ехать велосипедист. Что обязательно?',a:[['Плечевой взгляд направо',1],['Только посмотреть в зеркало',0]],w:'В зеркале есть слепая зона.'},
+ {t:'gefahren',p:4,q:'Ночью встречная машина слепит фарами. Что делаешь?',a:[['Смотрю на правый край дороги',1],['Снижаю скорость',1],['Включаю дальний свет в ответ',0]],w:'Ответный дальний свет ослепит обоих.'},
+ {t:'alkohol',p:5,q:'Какой предел алкоголя для водителя на испытательном сроке?',a:[['0,0 ‰',1],['0,3 ‰',0],['0,5 ‰',0]],w:'Probezeit и до 21 года — абсолютный ноль.'},
+ {t:'alkohol',p:5,q:'Опытный водитель, 0,4 ‰, едет «волной». Что ему грозит?',a:[['Уголовное наказание',1],['Ничего, ниже 0,5 ‰',0]],w:'С 0,3 ‰ при признаках опьянения — преступление.'},
+ {t:'alkohol',p:4,q:'Как быстрее вывести алкоголь?',a:[['Только ждать — ничего не ускоряет',1],['Крепкий кофе',0],['Холодный душ',0]],w:'Организм выводит примерно 0,1 ‰ в час.'},
+ {t:'alkohol',p:4,q:'Ты чувствуешь сильную усталость за рулём. Что поможет?',a:[['Остановиться и сделать паузу, поспать 15–20 минут',1],['Открыть окно и сделать музыку громче',0]],w:'Окно и музыка не спасают от микросна.'},
+ {t:'probezeit',p:5,q:'Новичок на испытательном сроке проехал на красный (A-нарушение). Что последует?',a:[['Обязательный семинар (Aufbauseminar)',1],['Испытательный срок продлят до 4 лет',1],['Ничего, если это первый раз',0]],w:'Одно A или два B — семинар и +2 года.'},
+ {t:'probezeit',p:3,n:8,q:'При скольких баллах во Фленсбурге отбирают права?',w:'8 баллов — Entzug.'},
+ {t:'probezeit',p:3,q:'Что всегда должно быть с собой в машине?',a:[['Водительское удостоверение',1],['Свидетельство о регистрации, часть I',1],['Свидетельство о регистрации, часть II',0]],w:'Часть II храни дома.'},
+ {t:'probezeit',p:3,q:'Сколько длится испытательный срок?',a:[['2 года',1],['1 год',0],['3 года',0]],w:'При нарушениях продлевается до 4 лет.'},
+ {t:'technik',p:3,n:1.6,q:'Минимальная глубина протектора шин в мм?',w:'1,6 мм — закон. Рекомендуется больше.'},
+ {t:'technik',p:4,q:'Что верно для экстренного торможения с ABS?',a:[['Нажать педаль в пол и держать',1],['Можно рулить во время торможения',1],['Тормозной путь всегда короче, чем без ABS',0]],w:'На снегу и гравии с ABS путь бывает длиннее.'},
+ {t:'technik',p:3,q:'Когда проверять давление в шинах?',a:[['На холодных шинах',1],['Сразу после долгой поездки',0]],w:'Тёплые шины показывают больше.'},
+ {t:'technik',p:5,q:'Ребёнок 8 лет, рост 130 см. Как его везти?',a:[['В подходящем детском кресле',1],['Просто пристегнуть обычным ремнём',0]],w:'До 12 лет и ниже 150 см — детское кресло.'},
+ {t:'technik',p:3,q:'Груз выступает сзади на 1,5 м. Что нужно?',a:[['Пометить конец груза красным флажком/табличкой',1],['Ничего, если груз закреплён',0]],w:'Больше 1 м — обозначить.'},
+ {t:'umwelt',p:3,q:'Как ездить экономно и экологично?',a:[['Рано переключаться на высшую передачу',1],['Не прогревать двигатель на месте',1],['Ехать на низкой передаче с высокими оборотами',0]],w:'≈ 2000 об/мин — пора переключаться.'},
+ {t:'umwelt',p:2,q:'Ты долго стоишь перед закрытым шлагбаумом. Что делаешь?',a:[['Выключаю двигатель',1],['Оставляю мотор работать',0]],w:'Экономия топлива и меньше выхлопов.'},
+ {t:'umwelt',p:2,q:'Багажник на крыше пустой. Что делать?',a:[['Снять его',1],['Оставить, он не влияет',0]],w:'Сопротивление воздуха = больше расход.'},
+ {t:'umwelt',p:4,q:'Когда можно включать задний противотуманный фонарь?',a:[['Только при видимости меньше 50 м из-за тумана',1],['При сильном дожде',0],['Ночью на трассе',0]],w:'Иначе он слепит тех, кто сзади.'},
+ {t:'umwelt',p:4,q:'Ты первым приехал к месту аварии. Что делаешь сначала?',a:[['Обезопасить место: аварийка, жилет, знак',1],['Сразу фотографировать',0],['Сразу вытащить пострадавших из машины в любом случае',0]],w:'Сначала безопасность, потом 112, потом помощь.'},
+ {t:'umwelt',p:3,n:112,q:'По какому номеру вызвать скорую помощь и пожарных?',w:'112 — по всей Европе.'},
+ {t:'umwelt',p:4,q:'На каком расстоянии ставить знак аварийной остановки на автобане?',a:[['150–400 м',1],['Около 50 м',0],['Около 20 м',0]],w:'В городе ≈ 50 м, вне города ≈ 100 м.'}
+];
+Q.forEach((q,i)=>q.id=i);
+const TOPICS=[['all','Все'],['wrong','Мои ошибки'],...CH.filter(c=>c[0]!=='pruefung').map(c=>[c[0],c[1]])];
+
+function qImg(q){if(!q.img)return'';
+ if(q.img.sign)return `<div class="q-img"><span class="one">${signSvg(q.img.sign)}</span></div>`;
+ if(q.img.scene)return `<div class="q-img">${scene(SCENES[q.img.scene])}</div>`;
+ if(q.img.fig==='rettung')return `<div class="q-img">${figRettung().replace(/<figcaption>.*<\/figcaption>/,'')}</div>`;return'';}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function parseNum(v){return parseFloat(String(v).replace(',','.').trim());}
+function isRight(q,ans){if(q.n!=null)return parseNum(ans)===q.n;const corr=q.a.map((x,i)=>x[1]?i:-1).filter(i=>i>=0).sort().join(',');return (ans||[]).slice().sort().join(',')===corr;}
+function qBody(q,order,ans,reveal,name){let h=`<div class="q-text">${q.q}</div>${qImg(q)}`;
+ if(q.n!=null){h+=`<div class="numin"><label for="${name}">Ответ:</label><input id="${name}" inputmode="decimal" autocomplete="off" value="${ans??''}" ${reveal?'disabled':''}>`+(reveal?`<span>верно: <b>${String(q.n).replace('.',',')}</b></span>`:'')+`</div>`;}
+ else{h+=`<div class="opts">`+order.map(i=>{const sel=(ans||[]).includes(i),c=q.a[i][1];let cls='';if(reveal){cls=sel&&c?'ok':sel&&!c?'bad':!sel&&c?'miss':'';}
+  return `<label class="opt ${cls}"><input type="checkbox" data-i="${i}" ${sel?'checked':''} ${reveal?'disabled':''}><span>${q.a[i][0]}</span></label>`;}).join('')+`</div>`;}
+ return h;}
+function readAns(box,q){if(q.n!=null){const v=box.querySelector('input').value;return v===''?null:v;}return [...box.querySelectorAll('input[type=checkbox]:checked')].map(x=>+x.dataset.i);}
+
+/* ---------- training ---------- */
+let QZ={topic:'all',list:[],pos:0,order:null,done:false,right:0,count:0};
+function startQuiz(topic){QZ.topic=topic;let pool=topic==='all'?Q:topic==='wrong'?Q.filter(q=>ST.wrong[q.id]):Q.filter(q=>q.t===topic);
+ QZ.list=shuffle(pool);QZ.pos=0;QZ.right=0;QZ.count=0;renderChips();renderQuiz();}
+function renderChips(){document.getElementById('topicChips').innerHTML=TOPICS.map(([k,l])=>{const n=k==='all'?Q.length:k==='wrong'?Object.keys(ST.wrong).length:Q.filter(q=>q.t===k).length;
+ return `<button type="button" class="chip ${QZ.topic===k?'on':''}" data-k="${k}">${l} · ${n}</button>`;}).join('');}
+document.getElementById('topicChips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b)location.hash='quiz-'+b.dataset.k;});
+function renderQuiz(){const box=document.getElementById('quizBox');const L=QZ.list;
+ document.getElementById('qBar').style.width=(L.length?QZ.pos/L.length*100:0)+'%';
+ if(!L.length){box.innerHTML=`<div class="card"><p>${QZ.topic==='wrong'?'Ошибок пока нет — отлично! Потренируй темы или пройди пробный экзамен.':'Нет вопросов.'}</p></div>`;return;}
+ if(QZ.pos>=L.length){box.innerHTML=`<div class="result ${QZ.right/QZ.count>=.85?'pass':'fail'}"><div class="big">${QZ.right} из ${QZ.count}</div><p>верных ответов в этой серии.</p><div class="row"><button class="btn" type="button" id="againBtn">Ещё раз</button><a class="btn ghost" href="#exam">К пробному экзамену</a></div></div>`;
+  document.getElementById('againBtn').onclick=()=>startQuiz(QZ.topic);return;}
+ const q=L[QZ.pos];QZ.order=q.a?shuffle(q.a.map((_,i)=>i)):null;QZ.done=false;
+ box.innerHTML=`<div class="q"><div class="q-head"><span class="q-meta">Вопрос ${QZ.pos+1} из ${L.length} · ${CHN[q.t]}</span><span class="fp">${q.p} очк.</span></div><div id="qb">${qBody(q,QZ.order,null,false,'qnum')}</div><div class="cap">${q.n!=null?'Впиши число.':'Отметь все верные ответы.'}</div><div id="qfb"></div><div class="row"><button class="btn" type="button" id="qGo">Проверить</button></div></div>`;
+ document.getElementById('qGo').onclick=checkQuiz;
+ const inp=box.querySelector('.numin input');if(inp)inp.addEventListener('keydown',e=>{if(e.key==='Enter')checkQuiz();});}
+function checkQuiz(){const q=QZ.list[QZ.pos];const qb=document.getElementById('qb');
+ if(QZ.done){QZ.pos++;renderQuiz();window.scrollTo({top:0});return;}
+ const ans=readAns(qb,q);if(ans==null||(Array.isArray(ans)&&!ans.length)){document.getElementById('qfb').innerHTML=`<div class="fb bad">Сначала выбери ответ.</div>`;return;}
+ const ok=isRight(q,ans);QZ.done=true;QZ.count++;if(ok)QZ.right++;
+ const s=ST.stats[q.t]||{r:0,n:0};s.n++;if(ok)s.r++;ST.stats[q.t]=s;if(ok)delete ST.wrong[q.id];else ST.wrong[q.id]=1;save();
+ qb.innerHTML=qBody(q,QZ.order,ans,true,'qnum');
+ document.getElementById('qfb').innerHTML=`<div class="fb ${ok?'ok':'bad'}"><b>${ok?'Верно!':'Неверно.'}</b> Почему: ${q.w}</div>`;
+ document.getElementById('qGo').textContent=QZ.pos+1<QZ.list.length?'Дальше':'Итог';renderChips();}
+
+/* ---------- exam ---------- */
+let EX=null,timer=null;
+function examIntro(){clearInterval(timer);const last=ST.exams.slice(-5).reverse();
+ document.getElementById('examBox').innerHTML=`<div class="card"><h3>Правила как на экзамене</h3><ul><li>30 вопросов (у меня в базе ${Q.length}, выбираются случайно).</li><li>Сдал: не больше 10 штрафных очков и не больше одной ошибки на 5 очков.</li><li>Таймер 45 минут. Можно переходить между вопросами.</li></ul><div class="row"><button class="btn" type="button" id="exStart">Начать экзамен</button></div></div>`+
+ (last.length?`<div class="card"><h3>Последние попытки</h3><div class="tbl"><table><tr><th>Дата</th><th>Штрафные очки</th><th>Итог</th></tr>${last.map(x=>`<tr><td>${x.d}</td><td class="num">${x.fp}</td><td>${x.pass?'<span class="learned-tag">сдал</span>':'не сдал'}</td></tr>`).join('')}</table></div></div>`:'');
+ document.getElementById('exStart').onclick=startExam;}
+function startExam(){const qs=shuffle(Q).slice(0,30);EX={qs,orders:qs.map(q=>q.a?shuffle(q.a.map((_,i)=>i)):null),ans:qs.map(()=>null),pos:0,end:Date.now()+45*60000,done:false};
+ clearInterval(timer);timer=setInterval(tick,1000);renderExam();}
+function tick(){if(!EX||EX.done)return;const ms=EX.end-Date.now();const el=document.getElementById('exTime');if(ms<=0){finishExam();return;}
+ if(el)el.textContent=Math.floor(ms/60000)+':'+String(Math.floor(ms/1000)%60).padStart(2,'0');}
+function storeAns(){if(!EX||EX.done)return;const qb=document.getElementById('exq');if(!qb)return;const q=EX.qs[EX.pos];const a=readAns(qb,q);EX.ans[EX.pos]=(Array.isArray(a)&&!a.length)?null:a;}
+function renderExam(){const q=EX.qs[EX.pos],rev=EX.done;
+ const nav=EX.qs.map((qq,i)=>{let c=i===EX.pos?'cur':'';if(rev)c+=isRight(qq,EX.ans[i])?' r':' w';else if(EX.ans[i]!=null)c+=' ans';return `<button type="button" class="${c}" data-i="${i}">${i+1}</button>`;}).join('');
+ document.getElementById('examBox').innerHTML=(rev?resultHtml():'')+`<div class="row" style="justify-content:space-between"><span class="q-meta">${rev?'Разбор ошибок':'Осталось <b id="exTime">45:00</b>'}</span>${rev?'<button class="btn ghost" type="button" id="exNew">Новый экзамен</button>':'<button class="btn ghost" type="button" id="exFin">Сдать экзамен</button>'}</div><div class="navq" id="exNav">${nav}</div>
+ <div class="q"><div class="q-head"><span class="q-meta">Вопрос ${EX.pos+1} из ${EX.qs.length} · ${CHN[q.t]}</span><span class="fp">${q.p} очк.</span></div><div id="exq">${qBody(q,EX.orders[EX.pos],EX.ans[EX.pos],rev,'exnum')}</div>${rev?`<div class="fb ${isRight(q,EX.ans[EX.pos])?'ok':'bad'}">${isRight(q,EX.ans[EX.pos])?'<b>Верно.</b> ':'<b>Ошибка.</b> '}${q.w}</div>`:''}
+ <div class="row"><button class="btn ghost" type="button" id="exPrev" ${EX.pos===0?'disabled':''}>Назад</button><button class="btn" type="button" id="exNext">${EX.pos<EX.qs.length-1?'Дальше':(rev?'К началу':'Сдать экзамен')}</button></div></div>`;
+ tick();
+ document.getElementById('exNav').onclick=e=>{const b=e.target.closest('button');if(!b)return;storeAns();EX.pos=+b.dataset.i;renderExam();};
+ document.getElementById('exPrev').onclick=()=>{storeAns();EX.pos--;renderExam();};
+ document.getElementById('exNext').onclick=()=>{storeAns();if(EX.pos<EX.qs.length-1)EX.pos++;else if(!rev){finishExam();return;}else EX.pos=0;renderExam();};
+ const f=document.getElementById('exFin');if(f)f.onclick=()=>{storeAns();finishExam();};
+ const n=document.getElementById('exNew');if(n)n.onclick=startExam;}
+function score(){let fp=0,five=0;EX.qs.forEach((q,i)=>{if(!isRight(q,EX.ans[i])){fp+=q.p;if(q.p===5)five++;}});return{fp,five,pass:fp<=10&&five<2};}
+function finishExam(){storeAns();EX.done=true;clearInterval(timer);const s=score();
+ EX.qs.forEach((q,i)=>{const ok=isRight(q,EX.ans[i]);if(ok)delete ST.wrong[q.id];else ST.wrong[q.id]=1;});
+ ST.exams.push({d:new Date().toLocaleDateString('ru-RU'),fp:s.fp,pass:s.pass});save();
+ const first=EX.qs.findIndex((q,i)=>!isRight(q,EX.ans[i]));EX.pos=first<0?0:first;renderExam();window.scrollTo({top:0});}
+function resultHtml(){const s=score(),wr=EX.qs.filter((q,i)=>!isRight(q,EX.ans[i])).length;
+ return `<div class="result ${s.pass?'pass':'fail'}"><div class="big">${s.pass?'Сдал':'Не сдал'}</div><p><b>${s.fp}</b> штрафных очков (можно до 10), неверных вопросов: ${wr}, из них «на 5»: ${s.five}.</p><p class="cap">${s.pass?'Отлично. Сдай так 3 раза подряд — и переходи на официальный каталог.':(s.five>=2?'Две ошибки по 5 очков — это провал даже при ≤10. Повтори «Кто едет первым» и «Опасные ситуации».':'Посмотри ошибки ниже (красные номера) и потренируй «Мои ошибки».')}</p></div>`;}
+
+/* ---------- learned / nav / home ---------- */
+function renderNav(){const learnedN=CH.filter(c=>ST.learned[c[0]]).length;
+ document.getElementById('topProgress').textContent=`Пройдено ${learnedN} из ${CH.length}`;
+ const cur=(location.hash.slice(1)||'start').split('-')[0];
+ document.getElementById('side').innerHTML=`<a href="#start" class="${cur==='start'?'on':''}"><span class="ic">⌂</span>Главная</a><div class="grp">Учить по порядку</div>`+
+  CH.map((c,i)=>`<a href="#${c[0]}" class="${cur===c[0]?'on':''} ${ST.learned[c[0]]?'done':''}"><span class="n">${ST.learned[c[0]]?'✓':i+1}</span>${c[1]}</a>`).join('')+
+  `<div class="grp">Проверить себя</div><a href="#quiz" class="${cur==='quiz'?'on':''}"><span class="ic">?</span>Тренировка</a><a href="#exam" class="${cur==='exam'?'on':''}"><span class="ic">30</span>Пробный экзамен</a><a href="#quellen" class="${cur==='quellen'?'on':''}"><span class="ic">↗</span>Где тренироваться дальше</a>`;
+ document.getElementById('chapGrid').innerHTML=CH.map((c,i)=>`<a class="chap ${ST.learned[c[0]]?'done':''}" href="#${c[0]}"><span class="n">${ST.learned[c[0]]?'✓':i+1}</span><span><b>${c[1]}</b><span>${c[2]}</span></span></a>`).join('');
+ let r=0,n=0;Object.values(ST.stats).forEach(s=>{r+=s.r;n+=s.n;});const lastEx=ST.exams[ST.exams.length-1];
+ document.getElementById('homeStats').innerHTML=`<div class="stat"><div class="v">${learnedN}/${CH.length}</div><div class="k">разделов пройдено</div></div><div class="stat"><div class="v">${n?Math.round(r/n*100)+'%':'—'}</div><div class="k">верных ответов в тренировке</div></div><div class="stat"><div class="v">${Object.keys(ST.wrong).length}</div><div class="k">вопросов в «Моих ошибках»</div></div><div class="stat"><div class="v">${lastEx?lastEx.fp:'—'}</div><div class="k">штрафных очков на последнем экзамене</div></div>`;}
+CH.forEach(([id])=>{const sec=document.querySelector(`[data-view="${id}"]`);const d=document.createElement('div');d.className='learn-row';sec.appendChild(d);});
+function renderLearnRows(){CH.forEach(([id],i)=>{const d=document.querySelector(`[data-view="${id}"] .learn-row`);const nx=CH[i+1];const done=ST.learned[id];
+ d.innerHTML=`<button type="button" class="btn ${done?'ghost':''}" data-learn="${id}">${done?'✓ Раздел пройден':'Отметить как пройденный'}</button>${id!=='pruefung'?`<a class="btn ghost" href="#quiz-${id}">Тренировать тему</a>`:''}${nx?`<a class="btn ghost" href="#${nx[0]}">Дальше: ${nx[1]} →</a>`:`<a class="btn ghost" href="#exam">К пробному экзамену →</a>`}`;});}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-learn]');if(!b)return;const id=b.dataset.learn;if(ST.learned[id])delete ST.learned[id];else ST.learned[id]=1;save();renderLearnRows();renderNav();});
+document.getElementById('resetBtn').onclick=()=>{const b=document.getElementById('resetBtn');if(b.dataset.c!=='1'){b.dataset.c='1';b.textContent='Точно сбросить? Нажми ещё раз';return;}
+ ST={learned:{},stats:{},wrong:{},exams:[]};save();b.dataset.c='';b.textContent='Сбросить всё';document.getElementById('resetMsg').textContent='Прогресс сброшен.';renderNav();renderLearnRows();};
+const menuBtn=document.getElementById('menuBtn'),side=document.getElementById('side');
+menuBtn.onclick=()=>{side.classList.toggle('open');menuBtn.setAttribute('aria-expanded',side.classList.contains('open'));};
+
+/* ---------- router ---------- */
+function route(){const [v,arg]=(location.hash.slice(1)||'start').split('-');
+ const views=[...document.querySelectorAll('section.view')];const target=views.find(s=>s.dataset.view===v)||views[0];
+ views.forEach(s=>s.hidden=s!==target);
+ if(target.dataset.view==='quiz')startQuiz(arg&&TOPICS.some(t=>t[0]===arg)?arg:'all');
+ if(target.dataset.view==='exam'&&!(EX&&!EX.done))examIntro();
+ side.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');
+ renderNav();window.scrollTo({top:0});}
+window.addEventListener('hashchange',route);
+renderLearnRows();route();
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+</body>
+</html>

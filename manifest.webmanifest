@@ -1,0 +1,17 @@
+{
+  "name": "Fahrschule Theorie — теория на права",
+  "short_name": "Fahrschule",
+  "description": "Теория немецкой автошколы, класс B, по-русски: разделы, знаки, тренировка и пробный экзамен.",
+  "lang": "ru",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#eef1f5",
+  "theme_color": "#0057a8",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
